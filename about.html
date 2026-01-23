@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Faizan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::selection {
+            background-color: #00693E;
+            color: #FFFFFF;
+        }
+
+        ::-moz-selection {
+            background-color: #00693E;
+            color: #FFFFFF;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            color: #000000;
+            font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        a {
+            color: #00693E;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        a:hover::before {
+            content: '> ';
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 40px;
+        }
+
+        .profile-photo {
+            width: 100%;
+            filter: grayscale(100%);
+            border: 1px solid #000000;
+            margin-bottom: 25px;
+        }
+
+        .about-text {
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back</a>
+        <h1>About Me</h1>
+        <img src="assets/mun-photo.jpg" alt="Faizan at MUN" class="profile-photo">
+        <p class="about-text">This is Faizan. I am an engineering student, vibecoded this site made to test Opus 4.5,
+            ahh and this is an old photo from a school MUN.</p>
+    </div>
+</body>
+
+</html>
