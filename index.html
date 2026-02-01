@@ -180,8 +180,7 @@
                 link: "about.html"
             },
             lastUpdated: {
-                title: "Last Updated",
-                repo: "faizanxmd/mysite"
+                title: "Last Commit"
             },
             footer: {
                 github: "faizanxmd",
@@ -258,7 +257,7 @@
                 <section id="last-updated">
                     <h2>${lastUpdated.title}</h2>
                     <ul>
-                        <li id="commit-info">Loading...</li>
+                        <li><a id="commit-link" href="#" target="_blank" rel="noopener noreferrer">Loading...</a></li>
                     </ul>
                 </section>
             `;
@@ -274,13 +273,11 @@
                     day: 'numeric', 
                     year: 'numeric' 
                 });
-                const message = data.commit.message.split('\n')[0]; // First line only
-                document.getElementById('commit-info').innerHTML = `
-                    <a href="${data.html_url}" target="_blank" rel="noopener noreferrer">${message}</a>
-                    <span style="color: #666; margin-left: 8px;">— ${formattedDate}</span>
-                `;
+                const link = document.getElementById('commit-link');
+                link.textContent = formattedDate;
+                link.href = data.html_url;
             } catch (error) {
-                document.getElementById('commit-info').textContent = 'Unable to load';
+                document.getElementById('commit-link').textContent = '—';
             }
         }
 
