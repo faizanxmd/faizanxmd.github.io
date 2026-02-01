@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Finds - Faizan</title>
+    <link rel="icon" type="image/png" href="assets/favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::selection {
+            background-color: #00693E;
+            color: #FFFFFF;
+        }
+
+        ::-moz-selection {
+            background-color: #00693E;
+            color: #FFFFFF;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            color: #000000;
+            font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 20px 40px;
+        }
+
+        /* Header */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            color: #00693E;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .tagline {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 50px;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 20px;
+            color: #004d2e;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .item-title {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .item-title a {
+            color: #00693E;
+            text-decoration: none;
+            font-size: 1.05rem;
+        }
+
+        .item-title a:hover {
+            text-decoration: underline;
+        }
+
+        .item-title a:hover::before {
+            content: '> ';
+        }
+
+        .item-note {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Empty state */
+        .empty {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            font-size: 0.9rem;
+        }
+
+        .footer-item {
+            color: #666;
+        }
+
+        .footer-item a {
+            color: #00693E;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back</a>
+        
+        <h1>Cool Finds</h1>
+        <p class="tagline">a bookmark for your thoughts</p>
+
+        <section>
+            <h2>Links</h2>
+            <ul>
+                <li>
+                    <span class="item-title"><a href="#">Placeholder Link</a></span>
+                    <span class="item-note">A placeholder for future discoveries.</span>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Quotes</h2>
+            <ul>
+                <li class="empty">Nothing here yet.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Tools</h2>
+            <ul>
+                <li class="empty">Nothing here yet.</li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <span class="footer-item"><a href="https://github.com/faizanxmd">GitHub</a></span>
+                <span class="footer-item"><a href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></span>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
