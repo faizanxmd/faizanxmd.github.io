@@ -21,6 +21,11 @@
             color: #FFFFFF;
         }
 
+        ::-moz-selection {
+            background-color: #00693E;
+            color: #FFFFFF;
+        }
+
         body {
             background-color: #FFFFFF;
             color: #000000;
@@ -30,20 +35,20 @@
         }
 
         .container {
-            max-width: 600px; /* Tighter width for a vertical list */
+            max-width: 720px;
             margin: 0 auto;
-            padding: 80px 20px 40px;
+            padding: 60px 20px 40px;
         }
 
         /* Header */
         header {
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
         .site-name {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 400;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: #000000;
         }
 
@@ -52,11 +57,10 @@
             color: #666;
             margin-bottom: 20px;
         }
-
-        .intro {
-            font-size: 1.1rem;
+        
+        .intro-text {
             color: #000;
-            margin-bottom: 40px;
+            margin-bottom: 10px;
         }
 
         .cursor {
@@ -68,9 +72,21 @@
             51%, 100% { opacity: 0; }
         }
 
+        /* Row layout */
+        .row {
+            display: flex;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .row .col {
+            flex: 1;
+            min-width: 0;
+        }
+
         /* Sections */
         section {
-            margin-bottom: 40px; /* Vertical spacing between groups */
+            margin-bottom: 0;
         }
 
         h2 {
@@ -80,19 +96,15 @@
             letter-spacing: 0.08em;
             margin-bottom: 12px;
             color: #004d2e;
-            display: inline-block;
-            border-bottom: 1px solid transparent;
-        }
-        
-        /* Links */
-        a {
-            color: #00693E;
-            text-decoration: none;
-            transition: opacity 0.2s ease;
         }
 
-        a:hover {
-            text-decoration: underline;
+        h2 a {
+            color: inherit;
+        }
+
+        p {
+            color: #00693E;
+            line-height: 1.7;
         }
 
         ul {
@@ -100,35 +112,71 @@
         }
 
         li {
-            margin-bottom: 8px;
-            color: #333;
-        }
-        
-        /* Specific link styles within lists to keep it clean */
-        li a {
+            margin-bottom: 6px;
             color: #00693E;
+        }
+
+        a {
+            color: #00693E;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        a:hover::before {
+            content: '> ';
+        }
+
+        /* Full-width sections */
+        .full-width {
+            margin-bottom: 50px;
         }
 
         /* Footer */
         footer {
-            margin-top: 80px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            font-size: 0.85rem;
-            color: #999;
-            display: flex;
-            justify-content: space-between;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
         }
 
-        .footer-links a {
-            margin-right: 15px;
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            font-size: 0.9rem;
+        }
+
+        .footer-item {
             color: #666;
         }
 
-        /* Mobile adjustments */
+        .footer-item a {
+            color: #00693E;
+        }
+
+        .built-in {
+            width: 100%;
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        /* Mobile */
         @media (max-width: 600px) {
             .container {
                 padding: 40px 20px;
+            }
+
+            .site-name {
+                font-size: 2rem;
+            }
+
+            .row {
+                flex-direction: column;
+                gap: 35px;
             }
         }
     </style>
@@ -138,66 +186,67 @@
     <div class="container">
         <header>
             <h1 class="site-name" id="site-name"><span class="cursor">█</span></h1>
-            <p class="site-subline">Mathikere, Bangalore</p>
-            
-            <p class="intro">
-                Engineering student at MSRIT. <br>
-                <a href="about.html" style="font-size: 0.9rem;">(more)</a>
-            </p>
+            <p class="site-subline">Mathikere · Updated <span id="update-date">Feb 2, 2026</span></p>
+            <p class="intro-text">Engineering student at MSRIT.</p>
         </header>
 
-        <section>
-            <h2>Now</h2>
-            <p>Finals — mostly studying, not doing much else.</p>
-        </section>
+        <div class="row">
+            <section class="col">
+                <h2>Writing</h2>
+                <ul>
+                    <li><a href="articles/us-election.html">US Election 2024</a></li>
+                </ul>
+            </section>
+            <section class="col">
+                <h2>Reading</h2>
+                <ul>
+                    <li><a href="https://beej.us/guide/bgc/">Beej's Guide to C</a></li>
+                    <li><a href="https://en.wikipedia.org/wiki/The_Stand">The Stand</a></li>
+                    <li><a href="https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind">Sapiens</a></li>
+                </ul>
+            </section>
+        </div>
 
-        <section>
-            <h2>Writing</h2>
-            <ul>
-                <li><a href="articles/us-election.html">US Election 2024</a></li>
-            </ul>
-        </section>
+        <div class="row">
+            <section class="col">
+                <h2>Heavy Rotation</h2>
+                <ul>
+                    <li><a href="https://youtu.be/1lyu1KKwC74">Bitter Sweet Symphony</a></li>
+                    <li><a href="https://youtube.com/playlist?list=PLL-NbN8uTOigsPnqWhPLWJ4ADAkmNbrQI">Rubber Soul (Album)</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=TRJ_s2G76Hg">Far From Any Road</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=McvdQYzlLM8">ants in my room</a></li>
+                </ul>
+            </section>
+            <section class="col">
+                <h2>Signal</h2>
+                <ul>
+                    <li><a href="https://grahamduncan.blog/whats-going-on-here/">What's Going On Here? (Graham Duncan)</a></li>
+                    <li><a href="https://robinhome.vercel.app/">Lil Mo</a></li>
+                </ul>
+            </section>
+        </div>
 
-        <section>
-            <h2>Reading</h2>
-            <ul>
-                <li><a href="https://beej.us/guide/bgc/">Beej's Guide to C</a></li>
-                <li><a href="https://en.wikipedia.org/wiki/The_Stand">The Stand</a></li>
-                <li><a href="https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind">Sapiens</a></li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Heavy Rotation</h2>
-            <ul>
-                <li><a href="https://youtu.be/1lyu1KKwC74">Bitter Sweet Symphony</a></li>
-                <li><a href="https://youtube.com/playlist?list=PLL-NbN8uTOigsPnqWhPLWJ4ADAkmNbrQI">Rubber Soul</a></li>
-                <li><a href="https://www.youtube.com/watch?v=TRJ_s2G76Hg">Far From Any Road</a></li>
-                <li><a href="https://www.youtube.com/watch?v=McvdQYzlLM8">ants in my room</a></li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Signal</h2>
-            <ul>
-                <li><a href="https://grahamduncan.blog/whats-going-on-here/">What's Going On Here?</a></li>
-                <li><a href="https://robinhome.vercel.app/">Lil Mo</a></li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Cool Finds</h2>
-            <ul>
-                <li><a href="#">a bookmark for your thoughts</a></li>
-            </ul>
-        </section>
+        <div class="row">
+            <section class="col">
+                <h2>Cool Finds</h2>
+                <ul>
+                    <li><a href="#">a bookmark for your thoughts</a></li>
+                </ul>
+            </section>
+            <section class="col">
+                <h2>About</h2>
+                <ul>
+                    <li><a href="about.html">About Me</a></li>
+                </ul>
+            </section>
+        </div>
 
         <footer>
-            <div class="footer-links">
-                <a href="https://github.com/faizanxmd">GitHub</a>
-                <a href="mailto:me@faizanxmd.online">Email</a>
+            <div class="footer-content">
+                <span class="footer-item"><a href="https://github.com/faizanxmd">GitHub</a></span>
+                <span class="footer-item"><a href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></span>
+                <span class="built-in">Built in Mathikere</span>
             </div>
-            <div>Built in Mathikere</div>
         </footer>
     </div>
 
@@ -206,6 +255,7 @@
 
         async function typeWriter(element, text) {
             const cursor = '<span class="cursor">█</span>';
+            
             for (let i = 0; i <= text.length; i++) {
                 element.innerHTML = text.substring(0, i) + cursor;
                 await sleep(100);
@@ -216,22 +266,42 @@
             const h1 = document.getElementById('site-name');
             const cursor = '<span class="cursor">█</span>';
             
-            // Type "Faizn"
+            // Type "Faizn" (with typo)
             await typeWriter(h1, "Faizn");
+            
+            // Wait
             await sleep(800);
             
-            // Backspace
+            // Backspace 1 char
             h1.innerHTML = "Faiz" + cursor;
             await sleep(100);
             
-            // Complete
+            // Type "an" to complete
             h1.innerHTML = "Faiza" + cursor;
             await sleep(100);
             h1.innerHTML = "Faizan" + cursor;
         }
 
+        async function fetchLatestCommit() {
+            try {
+                const response = await fetch('https://api.github.com/repos/faizanxmd/mysite/commits/main');
+                const data = await response.json();
+                const date = new Date(data.commit.committer.date);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                });
+                const el = document.getElementById('update-date');
+                if (el) el.textContent = formattedDate;
+            } catch (error) {
+                // Keep default date if fetch fails
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(animateHeader, 300);
+            fetchLatestCommit();
         });
     </script>
 </body>
