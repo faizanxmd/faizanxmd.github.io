@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,353 +9,118 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        ::selection {
-            background-color: #00693E;
-            color: #FFFFFF;
-        }
-
-        ::-moz-selection {
-            background-color: #00693E;
-            color: #FFFFFF;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        ::selection { background-color: #00693E; color: #fff; }
         body {
-            background-color: #FFFFFF;
-            color: #000000;
-            font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace;
+            background: #fff;
+            color: #000;
+            font-family: 'Courier Prime', monospace;
             font-size: 16px;
             line-height: 1.6;
         }
-
         .container {
             max-width: 680px;
             margin: 0 auto;
             padding: 60px 20px;
         }
-
         h1 {
             font-size: 2rem;
             font-weight: 400;
             margin-bottom: 60px;
         }
-
-        .cursor {
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            50% {
-                opacity: 1;
-            }
-
-            51%,
-            100% {
-                opacity: 0;
-            }
-        }
-
-        section {
-            margin-bottom: 50px;
-        }
-
         h2 {
             font-size: 1rem;
             font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             margin-bottom: 15px;
-            color: #000000;
         }
-
-        ul {
-            list-style: none;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
+        section { margin-bottom: 50px; }
+        ul { list-style: none; }
+        li { margin-bottom: 8px; }
         a {
             color: #00693E;
             text-decoration: none;
-            transition: all 0.15s ease;
         }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        a::before {
-            content: '';
-            transition: content 0.15s ease;
-        }
-
-        a:hover::before {
-            content: '> ';
-        }
-
-        .profile-photo {
-            width: 100%;
-            filter: grayscale(100%);
-            border: 1px solid #000000;
-            margin-bottom: 15px;
-        }
-
-        .about-text {
-            line-height: 1.7;
-        }
-
+        a:hover { text-decoration: underline; }
+        a:hover::before { content: '> '; }
+        .now { color: #00693E; }
         footer {
             margin-top: 80px;
             padding-top: 30px;
-            border-top: 1px solid #000000;
+            border-top: 1px solid #000;
+            font-size: 0.9rem;
         }
-
         .footer-links {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
         }
-
-        .footer-item {
-            font-size: 0.9rem;
-        }
-
-        .footer-item span {
-            color: #666;
-        }
+        .footer-item span { color: #666; }
     </style>
 </head>
-
 <body>
-    <div class="container" id="app"></div>
+    <div class="container">
+        <h1>Faizan</h1>
 
-    <script>
-        const siteData = {
-            name: "Faizan",
-            sections: {
-                writing: {
-                    title: "Writing",
-                    items: [
-                        { title: "US Election 2024", link: "articles/us-election.html" },
-                        
-                    ]
-                },
-                reading: {
-                    title: "Reading",
-                    items: [
-                        { title: "Beej's Guide to C", link: "https://beej.us/guide/bgc/" },
-                        { title: "The Stand", link: "https://en.wikipedia.org/wiki/The_Stand" },
-                        { title: "Sapiens", link: "https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind" }
-                    ]
-                },
-                signal: {
-                    title: "Signal",
-                    items: [
-                        { title: "What's Going On Here? (Graham Duncan)", link: "https://grahamduncan.blog/whats-going-on-here/" },
-                        { title: "Lil Mo", link: "https://robinhome.vercel.app/" }
-                    ]
-                },
-                heavyRotation: {
-                    title: "Heavy Rotation",
-                    items: [
-                        { title: "Bitter Sweet Symphony", link: "https://youtu.be/1lyu1KKwC74?si=f0qNlX21nFwGESvf" },
-                        { title: "Rubber Soul (Album)", link: "https://youtube.com/playlist?list=PLL-NbN8uTOigsPnqWhPLWJ4ADAkmNbrQI&si=cKjsYBfu2t4ndyLf" },
-                        { title: "Far From Any Road", link: "https://www.youtube.com/watch?v=TRJ_s2G76Hg" },
-                        { title: "ants in my room", link: "https://www.youtube.com/watch?v=McvdQYzlLM8" }
-                    ]
-                }
-            },
-            about: {
-                title: "About Me",
-                link: "about.html"
-            },
-            now: {
-                title: "Now",
-                text: "finals — nothing much"
-            },
-            coolFinds: {
-                title: "Cool Finds",
-                items: [
-                    { title: "a bookmark for your thoughts", link: "#" }
-                ]
-            },
-            footer: {
-                github: "faizanxmd",
-                email: "me@faizanxmd.online",
-                location: "Mathikere"
-            }
-        };
+        <section>
+            <h2>Writing</h2>
+            <ul>
+                <li><a href="articles/us-election.html">US Election 2024</a></li>
+            </ul>
+        </section>
 
-        // Typewriter animation for header
-        function typeWriter(element, text, callback) {
-            let i = 0;
-            const cursor = '<span class="cursor">█</span>';
+        <section>
+            <h2>Reading</h2>
+            <ul>
+                <li><a href="https://beej.us/guide/bgc/">Beej's Guide to C</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/The_Stand">The Stand</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind">Sapiens</a></li>
+            </ul>
+        </section>
 
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML = text.substring(0, i + 1) + cursor;
-                    i++;
-                    setTimeout(type, 100);
-                } else if (callback) {
-                    callback();
-                }
-            }
+        <section>
+            <h2>Signal</h2>
+            <ul>
+                <li><a href="https://grahamduncan.blog/whats-going-on-here/">What's Going On Here? (Graham Duncan)</a></li>
+                <li><a href="https://robinhome.vercel.app/">Lil Mo</a></li>
+            </ul>
+        </section>
 
-            element.innerHTML = cursor;
-            setTimeout(type, 500);
-        }
+        <section>
+            <h2>Heavy Rotation</h2>
+            <ul>
+                <li><a href="https://youtu.be/1lyu1KKwC74">Bitter Sweet Symphony</a></li>
+                <li><a href="https://youtube.com/playlist?list=PLL-NbN8uTOigsPnqWhPLWJ4ADAkmNbrQI">Rubber Soul (Album)</a></li>
+                <li><a href="https://www.youtube.com/watch?v=TRJ_s2G76Hg">Far From Any Road</a></li>
+                <li><a href="https://www.youtube.com/watch?v=McvdQYzlLM8">ants in my room</a></li>
+            </ul>
+        </section>
 
-        function animateHeader() {
-            const h1 = document.getElementById('site-title');
-            const cursor = '<span class="cursor">█</span>';
+        <section>
+            <h2>Now</h2>
+            <p class="now">finals — nothing much</p>
+        </section>
 
-            // Step 1: Type "Faizn"
-            typeWriter(h1, "Faizn", () => {
-                // Step 2: Wait 800ms
-                setTimeout(() => {
-                    // Step 3: Backspace 1 char
-                    h1.innerHTML = "Faiz" + '<span class="cursor">█</span>';
+        <section>
+            <h2>Cool Finds</h2>
+            <ul>
+                <!-- add links here -->
+            </ul>
+        </section>
 
-                    setTimeout(() => {
-                        // Step 4: Type "an"
-                        h1.innerHTML = "Faiza" + '<span class="cursor">█</span>';
+        <section>
+            <h2><a href="about.html">About Me</a></h2>
+        </section>
 
-                        setTimeout(() => {
-                            h1.innerHTML = "Faizan" + '<span class="cursor">█</span>';
-                        }, 100);
-                    }, 100);
-                }, 800);
-            });
-        }
-
-        function renderSection(key, section) {
-            return `
-                <section>
-                    <h2>${section.title}</h2>
-                    <ul>
-                        ${section.items.map(item => `
-                            <li><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a></li>
-                        `).join('')}
-                    </ul>
-                </section>
-            `;
-        }
-
-        function renderAbout(about) {
-            return `
-                <section>
-                    <h2><a href="${about.link}">${about.title}</a></h2>
-                </section>
-            `;
-        }
-
-        function renderNow(now) {
-            return `
-                <section>
-                    <h2>${now.title}</h2>
-                    <p style="color: #00693E;">${now.text}</p>
-                </section>
-            `;
-        }
-
-        async function fetchLatestCommit() {
-            try {
-                const response = await fetch('https://api.github.com/repos/faizanxmd/mysite/commits/main');
-                const data = await response.json();
-                const date = new Date(data.commit.committer.date);
-                const formattedDate = date.toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    day: 'numeric', 
-                    year: 'numeric' 
-                });
-                const link = document.getElementById('commit-link');
-                if (link) {
-                    link.textContent = formattedDate;
-                    link.href = data.html_url;
-                }
-            } catch (error) {
-                const link = document.getElementById('commit-link');
-                if (link) link.textContent = '—';
-            }
-        }
-
-        function renderCoolFinds(coolFinds) {
-            return `
-                <section>
-                    <h2>${coolFinds.title}</h2>
-                    <ul>
-                        ${coolFinds.items.map(item => `
-                            <li><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a></li>
-                        `).join('')}
-                    </ul>
-                </section>
-            `;
-        }
-
-        function renderFooter(footer) {
-            return `
-                <footer>
-                    <div class="footer-links">
-                        <div class="footer-item">
-                            <a href="https://github.com/${footer.github}" target="_blank" rel="noopener noreferrer">GitHub</a>
-                        </div>
-                        <div class="footer-item">
-                            <a href="mailto:${footer.email}">${footer.email}</a>
-                        </div>
-                        <div class="footer-item">
-                            <span>${footer.location}</span>
-                        </div>
-                        <div class="footer-item">
-                            <span>updated </span><a id="commit-link" href="#" target="_blank" rel="noopener noreferrer">—</a>
-                        </div>
-                    </div>
-                </footer>
-            `;
-        }
-
-        function render() {
-            const app = document.getElementById('app');
-
-            let html = `<h1 id="site-title"><span class="cursor">█</span></h1>`;
-
-            // Render all sections
-            for (const [key, section] of Object.entries(siteData.sections)) {
-                html += renderSection(key, section);
-            }
-
-            // Render now section
-            html += renderNow(siteData.now);
-
-            // Render cool finds section
-            html += renderCoolFinds(siteData.coolFinds);
-
-            // Render about section
-            html += renderAbout(siteData.about);
-
-            // Render footer
-            html += renderFooter(siteData.footer);
-
-            app.innerHTML = html;
-
-            // Start header animation
-            setTimeout(animateHeader, 300);
-
-            // Fetch latest commit info
-            fetchLatestCommit();
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', render);
-    </script>
+        <footer>
+            <div class="footer-links">
+                <div class="footer-item"><a href="https://github.com/faizanxmd">GitHub</a></div>
+                <div class="footer-item"><a href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></div>
+                <div class="footer-item"><span>Mathikere</span></div>
+                <div class="footer-item"><span>updated Feb 2025</span></div>
+            </div>
+        </footer>
+    </div>
 </body>
-
 </html>
