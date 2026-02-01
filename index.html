@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +10,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        ::selection, ::-moz-selection { background-color: #00693E; color: #FFFFFF; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::selection {
+            background-color: #00693E;
+            color: #FFFFFF;
+        }
+
+        ::-moz-selection {
+            background-color: #00693E;
+            color: #FFFFFF;
+        }
+
         body {
             background-color: #FFFFFF;
             color: #000000;
@@ -18,25 +33,90 @@
             font-size: 16px;
             line-height: 1.6;
         }
-        .container { max-width: 680px; margin: 0 auto; padding: 60px 20px; }
-        h1 { font-size: 2rem; font-weight: 400; margin-bottom: 60px; }
-        h2 { font-size: 1rem; font-weight: 400; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px; }
-        section { margin-bottom: 50px; }
-        ul { list-style: none; }
-        li { margin-bottom: 8px; }
-        a { color: #00693E; text-decoration: none; transition: all 0.15s ease; }
-        a:hover { text-decoration: underline; }
-        a:hover::before { content: '> '; }
-        .cursor { animation: blink 1s step-end infinite; }
-        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
-        .now { color: #00693E; }
-        footer { margin-top: 80px; padding-top: 30px; border-top: 1px solid #000000; }
-        .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
-        .footer-item { font-size: 0.9rem; }
-        .footer-item span, #commit-link:empty::before { color: #666; }
-        #commit-link:empty::before { content: '—'; }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 60px;
+        }
+
+        .cursor {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 1rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #00693E;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        a::before {
+            content: '';
+            transition: content 0.15s ease;
+        }
+
+        a:hover::before {
+            content: '> ';
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 1px solid #000000;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-item {
+            font-size: 0.9rem;
+        }
+
+        .footer-item span {
+            color: #666;
+        }
     </style>
 </head>
+
 <body>
     <div class="container" id="app"></div>
 
@@ -46,7 +126,9 @@
             sections: {
                 writing: {
                     title: "Writing",
-                    items: [{ title: "US Election 2024", link: "articles/us-election.html" }]
+                    items: [
+                        { title: "US Election 2024", link: "articles/us-election.html" },
+                    ]
                 },
                 reading: {
                     title: "Reading",
@@ -73,95 +155,165 @@
                     ]
                 }
             },
-            now: { title: "Now", text: "finals — nothing much" },
+            about: {
+                title: "About Me",
+                link: "about.html"
+            },
+            now: {
+                title: "Now",
+                text: "finals — nothing much"
+            },
             coolFinds: {
                 title: "Cool Finds",
-                items: [{ title: "a bookmark for your thoughts", link: "#" }]
+                items: [
+                    { title: "a bookmark for your thoughts", link: "#" }
+                ]
             },
-            about: { title: "About Me", link: "about.html" },
-            footer: { github: "faizanxmd", email: "me@faizanxmd.online", location: "Mathikere" }
+            footer: {
+                github: "faizanxmd",
+                email: "me@faizanxmd.online",
+                location: "Mathikere"
+            }
         };
 
-        // Typewriter animation: types text, optionally backspaces n chars, then types suffix
-        async function typeWriter(element, text, backspaceCount = 0, suffix = '') {
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+        async function typeWriter(element, text) {
             const cursor = '<span class="cursor">█</span>';
-            element.innerHTML = cursor;
             
-            // Type out the (possibly misspelled) text
             for (let i = 0; i <= text.length; i++) {
-                element.innerHTML = text.slice(0, i) + cursor;
+                element.innerHTML = text.substring(0, i) + cursor;
                 await sleep(100);
             }
+        }
+
+        async function animateHeader() {
+            const h1 = document.getElementById('site-title');
+            const cursor = '<span class="cursor">█</span>';
             
+            // Type "Faizn" (with typo)
+            await typeWriter(h1, "Faizn");
+            
+            // Wait
             await sleep(800);
             
-            // Backspace if needed
-            for (let i = 0; i < backspaceCount; i++) {
-                const current = text.slice(0, text.length - i - 1);
-                element.innerHTML = current + cursor;
-                await sleep(100);
-            }
+            // Backspace 1 char
+            h1.innerHTML = "Faiz" + cursor;
+            await sleep(100);
             
-            // Type suffix
-            const base = text.slice(0, text.length - backspaceCount);
-            for (let i = 0; i <= suffix.length; i++) {
-                element.innerHTML = base + suffix.slice(0, i) + cursor;
-                await sleep(100);
-            }
+            // Type "an" to complete
+            h1.innerHTML = "Faiza" + cursor;
+            await sleep(100);
+            h1.innerHTML = "Faizan" + cursor;
         }
 
-        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        function renderSection(key, section) {
+            return `
+                <section>
+                    <h2>${section.title}</h2>
+                    <ul>
+                        ${section.items.map(item => `
+                            <li><a href="${item.link}">${item.title}</a></li>
+                        `).join('')}
+                    </ul>
+                </section>
+            `;
+        }
 
-        // Generic section renderer
-        const renderSection = (title, items) => `
-            <section>
-                <h2>${title}</h2>
-                <ul>${items.map(i => `<li><a href="${i.link}">${i.title}</a></li>`).join('')}</ul>
-            </section>
-        `;
+        function renderAbout(about) {
+            return `
+                <section>
+                    <h2><a href="${about.link}">${about.title}</a></h2>
+                </section>
+            `;
+        }
 
-        // Fetch and display latest commit
+        function renderNow(now) {
+            return `
+                <section>
+                    <h2>${now.title}</h2>
+                    <p style="color: #00693E;">${now.text}</p>
+                </section>
+            `;
+        }
+
+        function renderCoolFinds(coolFinds) {
+            return `
+                <section>
+                    <h2>${coolFinds.title}</h2>
+                    <ul>
+                        ${coolFinds.items.map(item => `
+                            <li><a href="${item.link}">${item.title}</a></li>
+                        `).join('')}
+                    </ul>
+                </section>
+            `;
+        }
+
         async function fetchLatestCommit() {
             try {
-                const res = await fetch('https://api.github.com/repos/faizanxmd/mysite/commits/main');
-                const data = await res.json();
+                const response = await fetch('https://api.github.com/repos/faizanxmd/mysite/commits/main');
+                const data = await response.json();
                 const date = new Date(data.commit.committer.date);
-                const formatted = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                });
                 const link = document.getElementById('commit-link');
-                link.textContent = formatted;
-                link.href = data.html_url;
-            } catch {}
+                if (link) {
+                    link.textContent = formattedDate;
+                    link.href = data.html_url;
+                }
+            } catch (error) {
+                const link = document.getElementById('commit-link');
+                if (link) link.textContent = '—';
+            }
         }
 
-        // Render everything
-        function render() {
-            const { sections, now, coolFinds, about, footer } = siteData;
-            
-            document.getElementById('app').innerHTML = `
-                <h1 id="site-title"><span class="cursor">█</span></h1>
-                ${renderSection(sections.writing.title, sections.writing.items)}
-                ${renderSection(sections.reading.title, sections.reading.items)}
-                ${renderSection(sections.signal.title, sections.signal.items)}
-                ${renderSection(sections.heavyRotation.title, sections.heavyRotation.items)}
-                <section><h2>${now.title}</h2><p class="now">${now.text}</p></section>
-                ${renderSection(coolFinds.title, coolFinds.items)}
-                <section><h2><a href="${about.link}">${about.title}</a></h2></section>
+        function renderFooter(footer) {
+            return `
                 <footer>
                     <div class="footer-links">
-                        <div class="footer-item"><a href="https://github.com/${footer.github}">GitHub</a></div>
-                        <div class="footer-item"><a href="mailto:${footer.email}">${footer.email}</a></div>
-                        <div class="footer-item"><span>${footer.location}</span></div>
-                        <div class="footer-item"><span>updated </span><a id="commit-link" href="#" target="_blank"></a></div>
+                        <div class="footer-item">
+                            <a href="https://github.com/${footer.github}">GitHub</a>
+                        </div>
+                        <div class="footer-item">
+                            <a href="mailto:${footer.email}">${footer.email}</a>
+                        </div>
+                        <div class="footer-item">
+                            <span>${footer.location}</span>
+                        </div>
+                        <div class="footer-item">
+                            <span>updated </span><a id="commit-link" href="#" target="_blank">—</a>
+                        </div>
                     </div>
                 </footer>
             `;
+        }
 
-            // Start animations
-            setTimeout(() => typeWriter(document.getElementById('site-title'), 'Faizn', 1, 'an'), 300);
+        function render() {
+            const app = document.getElementById('app');
+
+            let html = `<h1 id="site-title"><span class="cursor">█</span></h1>`;
+
+            for (const [key, section] of Object.entries(siteData.sections)) {
+                html += renderSection(key, section);
+            }
+
+            html += renderNow(siteData.now);
+            html += renderCoolFinds(siteData.coolFinds);
+            html += renderAbout(siteData.about);
+            html += renderFooter(siteData.footer);
+
+            app.innerHTML = html;
+
+            setTimeout(animateHeader, 300);
             fetchLatestCommit();
         }
 
         document.addEventListener('DOMContentLoaded', render);
     </script>
 </body>
+
 </html>
