@@ -179,6 +179,10 @@
                 title: "About Me",
                 link: "about.html"
             },
+            lastUpdated: {
+                title: "Last Updated",
+                repo: "faizanxmd/mysite"
+            },
             footer: {
                 github: "faizanxmd",
                 email: "me@faizanxmd.online",
@@ -249,6 +253,37 @@
             `;
         }
 
+        function renderLastUpdated(lastUpdated) {
+            return `
+                <section id="last-updated">
+                    <h2>${lastUpdated.title}</h2>
+                    <ul>
+                        <li id="commit-info">Loading...</li>
+                    </ul>
+                </section>
+            `;
+        }
+
+        async function fetchLatestCommit() {
+            try {
+                const response = await fetch('https://api.github.com/repos/faizanxmd/mysite/commits/main');
+                const data = await response.json();
+                const date = new Date(data.commit.committer.date);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                });
+                const message = data.commit.message.split('\n')[0]; // First line only
+                document.getElementById('commit-info').innerHTML = `
+                    <a href="${data.html_url}" target="_blank" rel="noopener noreferrer">${message}</a>
+                    <span style="color: #666; margin-left: 8px;">— ${formattedDate}</span>
+                `;
+            } catch (error) {
+                document.getElementById('commit-info').textContent = 'Unable to load';
+            }
+        }
+
         function renderFooter(footer) {
             return `
                 <footer>
@@ -280,6 +315,9 @@
             // Render about section
             html += renderAbout(siteData.about);
 
+            // Render last updated section
+            html += renderLastUpdated(siteData.lastUpdated);
+
             // Render footer
             html += renderFooter(siteData.footer);
 
@@ -287,6 +325,9 @@
 
             // Start header animation
             setTimeout(animateHeader, 300);
+
+            // Fetch latest commit info
+            fetchLatestCommit();
         }
 
         // Initialize
