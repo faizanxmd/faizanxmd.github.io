@@ -179,8 +179,15 @@
                 title: "About Me",
                 link: "about.html"
             },
-            lastUpdated: {
-                title: "Last Commit"
+            now: {
+                title: "Now",
+                text: "finals — nothing much"
+            },
+            coolFinds: {
+                title: "Cool Finds",
+                items: [
+                    { title: "a bookmark for your thoughts", link: "#" }
+                ]
             },
             footer: {
                 github: "faizanxmd",
@@ -252,13 +259,11 @@
             `;
         }
 
-        function renderLastUpdated(lastUpdated) {
+        function renderNow(now) {
             return `
-                <section id="last-updated">
-                    <h2>${lastUpdated.title}</h2>
-                    <ul>
-                        <li><a id="commit-link" href="#" target="_blank" rel="noopener noreferrer">Loading...</a></li>
-                    </ul>
+                <section>
+                    <h2>${now.title}</h2>
+                    <p style="color: #00693E;">${now.text}</p>
                 </section>
             `;
         }
@@ -274,11 +279,27 @@
                     year: 'numeric' 
                 });
                 const link = document.getElementById('commit-link');
-                link.textContent = formattedDate;
-                link.href = data.html_url;
+                if (link) {
+                    link.textContent = formattedDate;
+                    link.href = data.html_url;
+                }
             } catch (error) {
-                document.getElementById('commit-link').textContent = '—';
+                const link = document.getElementById('commit-link');
+                if (link) link.textContent = '—';
             }
+        }
+
+        function renderCoolFinds(coolFinds) {
+            return `
+                <section>
+                    <h2>${coolFinds.title}</h2>
+                    <ul>
+                        ${coolFinds.items.map(item => `
+                            <li><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a></li>
+                        `).join('')}
+                    </ul>
+                </section>
+            `;
         }
 
         function renderFooter(footer) {
@@ -293,6 +314,9 @@
                         </div>
                         <div class="footer-item">
                             <span>${footer.location}</span>
+                        </div>
+                        <div class="footer-item">
+                            <span>updated </span><a id="commit-link" href="#" target="_blank" rel="noopener noreferrer">—</a>
                         </div>
                     </div>
                 </footer>
@@ -309,11 +333,14 @@
                 html += renderSection(key, section);
             }
 
+            // Render now section
+            html += renderNow(siteData.now);
+
+            // Render cool finds section
+            html += renderCoolFinds(siteData.coolFinds);
+
             // Render about section
             html += renderAbout(siteData.about);
-
-            // Render last updated section
-            html += renderLastUpdated(siteData.lastUpdated);
 
             // Render footer
             html += renderFooter(siteData.footer);
