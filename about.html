@@ -74,6 +74,58 @@
         .about-text {
             line-height: 1.8;
         }
+
+        /* ========================================
+           DARK MODE EASTER EGG - Press ~ (tilde)
+           ======================================== */
+        body.dark-mode {
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+
+        body.dark-mode ::selection {
+            background-color: #238636;
+            color: #ffffff;
+        }
+
+        body.dark-mode ::-moz-selection {
+            background-color: #238636;
+            color: #ffffff;
+        }
+
+        body.dark-mode h1 {
+            color: #c9d1d9;
+        }
+
+        body.dark-mode a {
+            color: #58a6ff;
+        }
+
+        body.dark-mode .profile-photo {
+            border-color: #30363d;
+        }
+
+        /* Dark mode indicator toast */
+        .dark-mode-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #238636;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .dark-mode-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 
@@ -85,6 +137,27 @@
         <p class="about-text">This is Faizan.engineering student at msrit.
             ahh and this is an old photo from school MUN.</p>
     </div>
+
+    <!-- Dark Mode Easter Egg Indicator -->
+    <div id="darkModeIndicator" class="dark-mode-indicator">🌙 dark mode on</div>
+
+    <script>
+        // ========================================
+        // DARK MODE EASTER EGG - Press ~ (tilde) to toggle
+        // ========================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '`' || e.key === '~') {
+                e.preventDefault();
+                const isDark = document.body.classList.toggle('dark-mode');
+                
+                // Show brief indicator
+                const indicator = document.getElementById('darkModeIndicator');
+                indicator.textContent = isDark ? '🌙 dark mode on' : '☀️ dark mode off';
+                indicator.classList.add('show');
+                setTimeout(() => indicator.classList.remove('show'), 1500);
+            }
+        });
+    </script>
 </body>
 
 </html>
