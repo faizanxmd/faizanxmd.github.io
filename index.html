@@ -398,7 +398,7 @@
                 
                 // Show brief indicator
                 const indicator = document.getElementById('darkModeIndicator');
-                indicator.textContent = isDark ? '🌙 dark mode on' : '☀️ dark mode off';
+                indicator.textContent = isDark ? 'dark mode on' : 'dark mode off';
                 indicator.classList.add('show');
                 setTimeout(() => indicator.classList.remove('show'), 1500);
             }
@@ -439,9 +439,14 @@
             }
 
             function drawMatrix() {
-                // Fade effect - use the body background color with low opacity
+                // Only show in dark mode
                 const isDark = document.body.classList.contains('dark-mode');
-                ctx.fillStyle = isDark ? 'rgba(13, 17, 23, 0.05)' : 'rgba(255, 255, 255, 0.05)';
+                if (!isDark) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    return;
+                }
+                
+                ctx.fillStyle = 'rgba(13, 17, 23, 0.05)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
                 ctx.fillStyle = '#FFD700'; // Golden yellow
@@ -474,12 +479,12 @@
                     canvas.classList.add('active');
                     initMatrix();
                     matrixInterval = setInterval(drawMatrix, 50);
-                    indicator.textContent = '💊 jogi is real';
+                    indicator.textContent = 'jogi is real';
                 } else {
                     canvas.classList.remove('active');
                     clearInterval(matrixInterval);
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    indicator.textContent = '💊 matrix mode off';
+                    indicator.textContent = 'matrix mode off';
                 }
 
                 indicator.classList.add('show');
