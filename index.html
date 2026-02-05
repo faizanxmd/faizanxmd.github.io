@@ -314,6 +314,9 @@
     <!-- Dark Mode Easter Egg Indicator -->
     <div id="darkModeIndicator" class="dark-mode-indicator">🌙 dark mode on</div>
 
+    <!-- Matrix Mode Canvas -->
+    <canvas id="matrix-canvas"></canvas>
+
     <script>
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -376,6 +379,101 @@
                 setTimeout(() => indicator.classList.remove('show'), 1500);
             }
         });
+
+        // ========================================
+        // MATRIX MODE EASTER EGG - Konami Code (↑↑↓↓←→←→BA)
+        // ========================================
+        (function() {
+            const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+            let konamiIndex = 0;
+            let matrixActive = false;
+            let matrixInterval = null;
+
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Matrix characters - mix of katakana and alphanumeric
+            const chars = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789ABCDEF';
+            const charArray = chars.split('');
+            const fontSize = 14;
+            let columns, drops;
+
+            function initMatrix() {
+                columns = Math.floor(canvas.width / fontSize);
+                drops = [];
+                for (let i = 0; i < columns; i++) {
+                    drops[i] = Math.random() * -100; // Start above screen randomly
+                }
+            }
+
+            function drawMatrix() {
+                // Fade effect - use the body background color with low opacity
+                const isDark = document.body.classList.contains('dark-mode');
+                ctx.fillStyle = isDark ? 'rgba(13, 17, 23, 0.05)' : 'rgba(255, 255, 255, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#00ff41'; // Matrix green
+                ctx.font = fontSize + 'px "Courier Prime", monospace';
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = charArray[Math.floor(Math.random() * charArray.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                    // Reset drop to top randomly after it goes below screen
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            function toggleMatrix() {
+                matrixActive = !matrixActive;
+                const indicator = document.getElementById('darkModeIndicator');
+
+                if (matrixActive) {
+                    canvas.classList.add('active');
+                    initMatrix();
+                    matrixInterval = setInterval(drawMatrix, 50);
+                    indicator.textContent = '💊 matrix mode on';
+                } else {
+                    canvas.classList.remove('active');
+                    clearInterval(matrixInterval);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    indicator.textContent = '💊 matrix mode off';
+                }
+
+                indicator.classList.add('show');
+                setTimeout(() => indicator.classList.remove('show'), 1500);
+            }
+
+            document.addEventListener('keydown', function(e) {
+                // Check if the pressed key matches the next key in Konami code
+                if (e.key === konamiCode[konamiIndex]) {
+                    konamiIndex++;
+                    // If complete sequence entered
+                    if (konamiIndex === konamiCode.length) {
+                        toggleMatrix();
+                        konamiIndex = 0; // Reset
+                    }
+                } else {
+                    // Reset if wrong key pressed (but allow same key to start over)
+                    konamiIndex = (e.key === konamiCode[0]) ? 1 : 0;
+                }
+
+                // ESC to exit matrix mode
+                if (e.key === 'Escape' && matrixActive) {
+                    toggleMatrix();
+                }
+            });
+        })();
     </script>
 </body>
 
