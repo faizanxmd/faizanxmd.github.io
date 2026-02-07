@@ -183,7 +183,7 @@
     <div class="container">
         <header>
             <h1 class="site-name" id="site-name"><span class="cursor">█</span></h1>
-            <p class="site-subline">Updated <span id="update-date">Feb 2, 2026</span></p>
+            <p class="site-subline">notes, links, and signal</p>
         </header>
 
         <div class="row">
@@ -233,7 +233,6 @@
 
         <footer>
             <div class="footer-content">
-                <span class="footer-item"><a href="https://github.com/faizanxmd">GitHub</a></span>
                 <span class="footer-item"><a href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></span>
                 <span class="built-in">Built in Mathikere</span>
             </div>
@@ -265,26 +264,8 @@
             h1.innerHTML = "Faizan" + cursor;
         }
 
-        async function fetchLatestCommit() {
-            try {
-                const response = await fetch('https://api.github.com/repos/faizanxmd/mysite/commits/main');
-                const data = await response.json();
-                const date = new Date(data.commit.committer.date);
-                const formattedDate = date.toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    day: 'numeric', 
-                    year: 'numeric' 
-                });
-                const el = document.getElementById('update-date');
-                if (el) el.textContent = formattedDate;
-            } catch (error) {
-                // Keep default date if fetch fails
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(animateHeader, 300);
-            fetchLatestCommit();
         });
     </script>
     <script src="assets/easter-eggs.js" defer></script>
