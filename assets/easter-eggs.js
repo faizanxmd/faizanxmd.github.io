@@ -3,13 +3,13 @@
     if (!body) return;
 
     const modeKeys = new Set(['`', '~']);
-    const secret = [106, 111, 103, 105].map((code) => String.fromCharCode(code)).join('');
-    const matrixMessage = body.dataset.matrixMessage || [106, 111, 103, 105, 32, 105, 115, 32, 114, 101, 97, 108].map((code) => String.fromCharCode(code)).join('');
     const allowMatrix = body.dataset.matrix !== 'off';
 
-    let secretIndex = 0;
+    let matrixMessage = body.dataset.matrixMessage || 'signal';
     let matrixActive = false;
     let matrixInterval = null;
+    let keyBuffer = '';
+    let requestInFlight = false;
 
     const indicator = document.createElement('div');
     indicator.className = 'mode-indicator';
@@ -108,6 +108,35 @@
         if (!isDark && matrixActive) stopMatrix();
     }
 
+    async function verifyServerUnlock() {
+        if (!allowMatrix || requestInFlight || keyBuffer.length < 4) return;
+
+        requestInFlight = true;
+
+        try {
+            const response = await fetch('/api/easter-egg', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ input: keyBuffer })
+            });
+
+            if (!response.ok) return;
+
+            const data = await response.json();
+            if (data && data.unlock) {
+                if (typeof data.matrixMessage === 'string' && data.matrixMessage.trim()) {
+                    matrixMessage = data.matrixMessage.trim();
+                }
+                toggleMatrix();
+                keyBuffer = '';
+            }
+        } catch (_error) {
+            // No fallback here: if API is unavailable, the secret stays server-side.
+        } finally {
+            requestInFlight = false;
+        }
+    }
+
     document.addEventListener('keydown', function (event) {
         if (modeKeys.has(event.key)) {
             event.preventDefault();
@@ -117,14 +146,9 @@
 
         const key = (event.key || '').toLowerCase();
 
-        if (allowMatrix && key === secret[secretIndex]) {
-            secretIndex++;
-            if (secretIndex === secret.length) {
-                toggleMatrix();
-                secretIndex = 0;
-            }
-        } else if (allowMatrix && key.length === 1) {
-            secretIndex = key === secret[0] ? 1 : 0;
+        if (allowMatrix && key.length === 1 && /[a-z0-9]/.test(key)) {
+            keyBuffer = (keyBuffer + key).slice(-128);
+            verifyServerUnlock();
         }
 
         if (event.key === 'Escape' && matrixActive) {
