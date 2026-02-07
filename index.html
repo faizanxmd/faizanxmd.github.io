@@ -183,7 +183,7 @@
     <div class="container">
         <header>
             <h1 class="site-name" id="site-name"><span class="cursor">█</span></h1>
-            <p class="site-subline">notes, links, and signal</p>
+            <p class="site-subline">Updated <span id="update-date">Feb 2, 2026</span></p>
         </header>
 
         <div class="row">
@@ -264,8 +264,24 @@
             h1.innerHTML = "Faizan" + cursor;
         }
 
+        async function fetchLatestUpdateDate() {
+            try {
+                const response = await fetch('/api/last-updated');
+                if (!response.ok) return;
+
+                const data = await response.json();
+                if (!data || !data.ok || !data.date) return;
+
+                const el = document.getElementById('update-date');
+                if (el) el.textContent = data.date;
+            } catch (_error) {
+                // Keep fallback date when API is unavailable.
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(animateHeader, 300);
+            fetchLatestUpdateDate();
         });
     </script>
     <script src="assets/easter-eggs.js" defer></script>
