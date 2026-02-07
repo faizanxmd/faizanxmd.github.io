@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faizan</title>
-    <link rel="icon" type="image/png" href="assets/favicon.jpg">
+    <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/easter-eggs.css">
     <style>
         * {
             margin: 0;
@@ -175,102 +176,6 @@
             }
         }
 
-        /* ========================================
-           DARK MODE EASTER EGG - Press ~ (tilde)
-           ======================================== */
-        body.dark-mode {
-            background-color: #0d1117;
-            color: #c9d1d9;
-        }
-
-        body.dark-mode ::selection {
-            background-color: #238636;
-            color: #ffffff;
-        }
-
-        body.dark-mode ::-moz-selection {
-            background-color: #238636;
-            color: #ffffff;
-        }
-
-        body.dark-mode .site-name {
-            color: #c9d1d9;
-        }
-
-        body.dark-mode .site-subline {
-            color: #8b949e;
-        }
-
-        body.dark-mode h2 {
-            color: #7ee787;
-        }
-
-        body.dark-mode p,
-        body.dark-mode li {
-            color: #58a6ff;
-        }
-
-        body.dark-mode a {
-            color: #58a6ff;
-        }
-
-        body.dark-mode footer {
-            border-top-color: #30363d;
-        }
-
-        body.dark-mode .footer-item {
-            color: #8b949e;
-        }
-
-        body.dark-mode .built-in {
-            color: #6e7681;
-        }
-
-        /* Dark mode indicator toast */
-        .dark-mode-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #238636;
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.3s, transform 0.3s;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        .dark-mode-indicator.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ========================================
-           MATRIX MODE EASTER EGG - Konami Code
-           ======================================== */
-        #matrix-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            display: block;
-        }
-
-        #matrix-canvas.active {
-            opacity: 0.15;
-        }
-
-        body.dark-mode #matrix-canvas.active {
-            opacity: 0.25;
-        }
     </style>
 </head>
 
@@ -335,12 +240,6 @@
         </footer>
     </div>
 
-    <!-- Dark Mode Easter Egg Indicator -->
-    <div id="darkModeIndicator" class="dark-mode-indicator">🌙 dark mode on</div>
-
-    <!-- Matrix Mode Canvas -->
-    <canvas id="matrix-canvas"></canvas>
-
     <script>
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -387,132 +286,8 @@
             setTimeout(animateHeader, 300);
             fetchLatestCommit();
         });
-
-        // ========================================
-        // DARK MODE EASTER EGG - Press ~ (tilde) to toggle
-        // ========================================
-        document.addEventListener('keydown', function(e) {
-            if (e.key === '`' || e.key === '~') {
-                e.preventDefault();
-                const isDark = document.body.classList.toggle('dark-mode');
-                
-                // Show brief indicator
-                const indicator = document.getElementById('darkModeIndicator');
-                indicator.textContent = isDark ? 'dark mode on' : 'dark mode off';
-                indicator.classList.add('show');
-                setTimeout(() => indicator.classList.remove('show'), 1500);
-            }
-        });
-
-        // ========================================
-        // MATRIX MODE EASTER EGG - Type "jogi"
-        // ========================================
-        (function() {
-            const triggerWord = 'jogi';
-            let jogiIndex = 0;
-            let matrixActive = false;
-            let matrixInterval = null;
-
-            const canvas = document.getElementById('matrix-canvas');
-            const ctx = canvas.getContext('2d');
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-
-            // Matrix message: "jogi is real"
-            const message = 'jogi is real';
-            const fontSize = 14;
-            let columns, drops, messageIndices;
-
-            function initMatrix() {
-                columns = Math.floor(canvas.width / fontSize);
-                drops = [];
-                messageIndices = [];
-                for (let i = 0; i < columns; i++) {
-                    drops[i] = Math.random() * -100; // Start above screen randomly
-                    messageIndices[i] = Math.floor(Math.random() * message.length);
-                }
-            }
-
-            function drawMatrix() {
-                // Only show in dark mode
-                const isDark = document.body.classList.contains('dark-mode');
-                if (!isDark) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    return;
-                }
-                
-                ctx.fillStyle = 'rgba(13, 17, 23, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                ctx.fillStyle = '#FFD700'; // Golden yellow
-                ctx.font = fontSize + 'px "Courier Prime", monospace';
-
-                for (let i = 0; i < drops.length; i++) {
-                    // Cycle through the message characters
-                    const char = message[messageIndices[i] % message.length];
-                    ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-
-                    // Move to next character in message for this column
-                    if (Math.random() > 0.95) {
-                        messageIndices[i]++;
-                    }
-
-                    // Reset drop to top randomly after it goes below screen
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                        messageIndices[i] = Math.floor(Math.random() * message.length);
-                    }
-                    drops[i]++;
-                }
-            }
-
-            function toggleMatrix() {
-                matrixActive = !matrixActive;
-                const indicator = document.getElementById('darkModeIndicator');
-
-                if (matrixActive) {
-                    canvas.classList.add('active');
-                    initMatrix();
-                    matrixInterval = setInterval(drawMatrix, 50);
-                    indicator.textContent = 'jogi is real';
-                } else {
-                    canvas.classList.remove('active');
-                    clearInterval(matrixInterval);
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    indicator.textContent = 'matrix mode off';
-                }
-
-                indicator.classList.add('show');
-                setTimeout(() => indicator.classList.remove('show'), 1500);
-            }
-
-            document.addEventListener('keydown', function(e) {
-                // Check if the pressed key matches the next letter in "jogi" (case insensitive)
-                const expectedChar = triggerWord[jogiIndex];
-                if (e.key.toLowerCase() === expectedChar) {
-                    jogiIndex++;
-                    // If complete word entered
-                    if (jogiIndex === triggerWord.length) {
-                        toggleMatrix();
-                        jogiIndex = 0; // Reset
-                    }
-                } else {
-                    // Reset if wrong key pressed (but allow same starting letter to count)
-                    jogiIndex = (e.key.toLowerCase() === triggerWord[0]) ? 1 : 0;
-                }
-
-                // ESC to exit matrix mode
-                if (e.key === 'Escape' && matrixActive) {
-                    toggleMatrix();
-                }
-            });
-        })();
     </script>
+    <script src="assets/easter-eggs.js" defer></script>
 </body>
 
 </html>

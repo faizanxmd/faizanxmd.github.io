@@ -4,193 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>US Election - Faizan</title>
-    <link rel="icon" type="image/png" href="../assets/favicon.png">
-    
+    <link rel="icon" type="image/jpeg" href="../assets/favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/easter-eggs.css">
     <style>
-        /* MEDIUM.COM CLEAN STYLE */
         body {
-            background-color: #ffffff;
-            color: rgba(0, 0, 0, 0.84);
-            /* Classic Serif Font for reading */
-            font-family: 'Charter', 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+            background-color: #FFFFFF;
+            color: #000000;
+            font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace;
             margin: 0 auto;
-            padding: 40px 20px; /* More top padding */
-            max-width: 680px; /* Strict reading width */
-            line-height: 1.6;
-            font-size: 20px;
-            -webkit-font-smoothing: antialiased;
+            padding: 50px 20px;
+            max-width: 680px;
+            line-height: 1.75;
+            font-size: 18px;
         }
 
-        /* Top Navigation */
         .nav-top {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 16px; /* Slightly larger */
-            margin-bottom: 40px;
-            color: #757575;
+            font-size: 0.95rem;
+            margin-bottom: 38px;
+            color: #666;
             display: block;
         }
-        .nav-top a { 
-            color: #757575; 
-            text-decoration: none; 
+
+        .nav-top a {
+            color: #666;
+            text-decoration: none;
             border-bottom: 1px solid transparent;
             transition: border-color 0.2s;
         }
-        .nav-top a:hover { 
-            color: #292929; 
-            border-bottom: 1px solid #292929; 
+
+        .nav-top a:hover {
+            color: #00693E;
+            border-bottom: 1px solid #00693E;
         }
 
-        /* Typography */
         h1 {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-weight: 700;
-            font-size: 42px;
-            line-height: 1.15;
-            margin-bottom: 15px; /* Spacing before date */
-            letter-spacing: -0.015em;
-            color: #292929;
+            font-size: 2rem;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            font-weight: 400;
+            color: #000000;
         }
 
         h3 {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 0.95rem;
             font-weight: 700;
-            font-size: 24px;
-            margin-top: 50px;
-            margin-bottom: 15px;
-            color: rgba(0, 0, 0, 0.84);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            color: #004d2e;
         }
 
-        /* Simple Date (No Avatar) */
         .date-line {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 15px;
-            color: #757575;
-            margin-bottom: 40px; /* Space before image */
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 36px;
             display: block;
         }
 
-        /* Images - Constrained to text width */
-        img { 
-            width: 100%; /* Matches text width exactly */
-            height: auto; 
-            display: block; 
-            margin: 0 0 40px 0; /* Bottom spacing only */
-            border-radius: 4px; /* Subtle rounding like Medium */
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 0 34px 0;
+            border: 1px solid #e5e5e5;
         }
-        
-        /* Links in text */
-        a.text-link { 
-            color: inherit; 
-            text-decoration: underline; 
-            text-decoration-color: rgba(0, 0, 0, 0.84); 
-            text-decoration-thickness: 1px;
-        }
-        a.text-link:hover { color: #000; }
 
-        /* Blockquote */
+        a.text-link {
+            color: #00693E;
+            text-decoration: underline;
+            text-decoration-color: #00693E;
+            text-underline-offset: 2px;
+        }
+
+        a.text-link:hover {
+            color: #004d2e;
+        }
+
         blockquote {
-            border-left: 3px solid #292929;
+            border-left: 2px solid #00693E;
             margin: 30px 0;
-            padding-left: 20px;
-            font-style: italic;
-            color: rgba(0, 0, 0, 0.84);
+            padding: 2px 0 2px 16px;
+            font-style: normal;
+            color: #00693E;
         }
 
-        /* Lists */
-        ul { margin-bottom: 30px; padding-left: 20px; }
-        li { margin-bottom: 10px; }
+        ul {
+            margin-bottom: 30px;
+            padding-left: 20px;
+        }
 
-        p { margin-bottom: 24px; margin-top: 0; }
-        strong { font-weight: 700; }
-        
-        /* Footer */
+        li {
+            margin-bottom: 10px;
+            color: #00693E;
+        }
+
+        p {
+            margin-bottom: 24px;
+            margin-top: 0;
+            color: #00693E;
+        }
+
+        strong {
+            font-weight: 700;
+            color: #004d2e;
+        }
+
         footer {
             margin-top: 60px;
             padding-top: 20px;
-            border-top: 1px solid #eee;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            border-top: 1px solid #e0e0e0;
             font-size: 14px;
-            color: #757575;
+            color: #666;
         }
 
-        /* ========================================
-           DARK MODE EASTER EGG - Press ~ (tilde)
-           ======================================== */
-        body.dark-mode {
-            background-color: #0d1117;
-            color: #c9d1d9;
-        }
+        @media (max-width: 600px) {
+            body {
+                padding: 40px 20px;
+                font-size: 16px;
+            }
 
-        body.dark-mode h1 {
-            color: #c9d1d9;
+            h1 {
+                font-size: 1.6rem;
+            }
         }
-
-        body.dark-mode h3 {
-            color: #c9d1d9;
-        }
-
-        body.dark-mode .nav-top {
-            color: #8b949e;
-        }
-
-        body.dark-mode .nav-top a {
-            color: #8b949e;
-        }
-
-        body.dark-mode .nav-top a:hover {
-            color: #58a6ff;
-            border-bottom-color: #58a6ff;
-        }
-
-        body.dark-mode .date-line {
-            color: #8b949e;
-        }
-
-        body.dark-mode a.text-link {
-            color: #58a6ff;
-            text-decoration-color: #58a6ff;
-        }
-
-        body.dark-mode a.text-link:hover {
-            color: #79c0ff;
-        }
-
-        body.dark-mode blockquote {
-            border-left-color: #c9d1d9;
-            color: #c9d1d9;
-        }
-
-        body.dark-mode footer {
-            border-top-color: #30363d;
-            color: #8b949e;
-        }
-
-        /* Dark mode indicator toast */
-        .dark-mode-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #238636;
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 0.85rem;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.3s, transform 0.3s;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        .dark-mode-indicator.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
     </style>
 </head>
-<body>
+<body data-matrix="off">
 
     <div class="nav-top">
         <a href="../index.html">← return 0;</a>
@@ -299,25 +242,6 @@
         &copy; 2026 Faizan. <a href="mailto:me@faizanxmd.online" class="text-link">Reply via Email</a>
     </footer>
 
-    <!-- Dark Mode Easter Egg Indicator -->
-    <div id="darkModeIndicator" class="dark-mode-indicator">🌙 dark mode on</div>
-
-    <script>
-        // ========================================
-        // DARK MODE EASTER EGG - Press ~ (tilde) to toggle
-        // ========================================
-        document.addEventListener('keydown', function(e) {
-            if (e.key === '`' || e.key === '~') {
-                e.preventDefault();
-                const isDark = document.body.classList.toggle('dark-mode');
-                
-                // Show brief indicator
-                const indicator = document.getElementById('darkModeIndicator');
-                indicator.textContent = isDark ? '🌙 dark mode on' : '☀️ dark mode off';
-                indicator.classList.add('show');
-                setTimeout(() => indicator.classList.remove('show'), 1500);
-            }
-        });
-    </script>
+    <script src="../assets/easter-eggs.js" defer></script>
 </body>
 </html>
