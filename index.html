@@ -186,61 +186,29 @@
             <p class="site-subline">Updated <span id="update-date">Feb 2, 2026</span></p>
         </header>
 
-        <div class="row">
-            <section class="col">
-                <h2>Writing</h2>
-                <ul>
-                    <li><a href="articles/us-election.html">US Election 2024</a></li>
-                </ul>
-            </section>
-            <section class="col">
-                <h2>Reading</h2>
-                <ul>
-                    <li><a href="https://beej.us/guide/bgc/">Beej's Guide to C</a></li>
-                    <li><a href="https://en.wikipedia.org/wiki/The_Stand">The Stand</a></li>
-                    <li><a href="https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind">Sapiens</a></li>
-                </ul>
-            </section>
-        </div>
-
-        <div class="row">
-            <section class="col">
-                <h2>Heavy Rotation</h2>
-                <ul>
-                    <li><a href="https://youtu.be/1lyu1KKwC74">Bitter Sweet Symphony</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLL-NbN8uTOigsPnqWhPLWJ4ADAkmNbrQI">Rubber Soul (Album)</a></li>
-                    <li><a href="https://www.youtube.com/watch?v=TRJ_s2G76Hg">Far From Any Road</a></li>
-                    <li><a href="https://www.youtube.com/watch?v=McvdQYzlLM8">ants in my room</a></li>
-                </ul>
-            </section>
-            <section class="col">
-                <h2>Signal</h2>
-                <ul>
-                    <li><a href="https://grahamduncan.blog/whats-going-on-here/">What's Going On Here? (Graham Duncan)</a></li>
-                    <li><a href="https://robinhome.vercel.app/">Lil Mo</a></li>
-                </ul>
-            </section>
-        </div>
-
-        <div class="row">
-            <section class="col">
-                <h2><a href="cool-finds.html">Cool Finds</a></h2>
-            </section>
-            <section class="col">
-                <h2><a href="about.html">About</a></h2>
-            </section>
-        </div>
+        <div id="home-rows"></div>
 
         <footer>
             <div class="footer-content">
-                <span class="footer-item"><a href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></span>
-                <span class="built-in">Built in Mathikere</span>
+                <span class="footer-item"><a id="footer-email" href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></span>
+                <span class="built-in" id="built-in-text">Built in Mathikere</span>
             </div>
         </footer>
     </div>
 
+    <script src="assets/site-content.js"></script>
     <script>
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        const defaultContent = {
+            home: {
+                rows: [],
+                footer: {
+                    email: 'me@faizanxmd.online',
+                    builtIn: 'Built in Mathikere'
+                }
+            }
+        };
+        const content = window.SITE_CONTENT || defaultContent;
 
         async function typeWriter(element, text) {
             const cursor = '<span class="cursor">█</span>';
@@ -279,7 +247,71 @@
             }
         }
 
+        function renderSection(sectionData) {
+            const section = document.createElement('section');
+            section.className = 'col';
+            const h2 = document.createElement('h2');
+
+            if (sectionData.href) {
+                const link = document.createElement('a');
+                link.href = sectionData.href;
+                link.textContent = sectionData.title;
+                h2.appendChild(link);
+                section.appendChild(h2);
+                return section;
+            }
+
+            h2.textContent = sectionData.title || '';
+            section.appendChild(h2);
+
+            const items = Array.isArray(sectionData.items) ? sectionData.items : [];
+            if (items.length > 0) {
+                const ul = document.createElement('ul');
+                items.forEach((item) => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = item.href || '#';
+                    a.textContent = item.label || '';
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                });
+                section.appendChild(ul);
+            }
+
+            return section;
+        }
+
+        function renderHomeRows() {
+            const container = document.getElementById('home-rows');
+            if (!container) return;
+
+            const rows = content?.home?.rows || [];
+            rows.forEach((rowData) => {
+                const row = document.createElement('div');
+                row.className = 'row';
+                row.appendChild(renderSection(rowData.left || {}));
+                row.appendChild(renderSection(rowData.right || {}));
+                container.appendChild(row);
+            });
+        }
+
+        function renderFooter() {
+            const email = content?.home?.footer?.email;
+            const builtIn = content?.home?.footer?.builtIn;
+
+            const emailEl = document.getElementById('footer-email');
+            if (emailEl && email) {
+                emailEl.textContent = email;
+                emailEl.href = `mailto:${email}`;
+            }
+
+            const builtInEl = document.getElementById('built-in-text');
+            if (builtInEl && builtIn) builtInEl.textContent = builtIn;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            renderHomeRows();
+            renderFooter();
             setTimeout(animateHeader, 300);
             fetchLatestUpdateDate();
         });
