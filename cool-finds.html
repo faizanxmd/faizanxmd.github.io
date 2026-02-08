@@ -36,118 +36,92 @@
         }
 
         .container {
-            max-width: 720px;
+            max-width: 760px;
             margin: 0 auto;
             padding: 60px 20px 40px;
         }
 
-        /* Header */
         .back-link {
             display: inline-block;
             margin-bottom: 30px;
             color: #666;
             font-size: 0.9rem;
+            text-decoration: none;
         }
 
         .back-link:hover {
             color: #00693E;
+            text-decoration: underline;
         }
 
         h1 {
             font-size: 1.8rem;
             font-weight: 400;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #000000;
         }
 
         .tagline {
             color: #666;
             font-size: 0.95rem;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
-        /* Sections */
-        section {
-            margin-bottom: 50px;
+        .board {
+            display: grid;
+            gap: 14px;
         }
 
-        h2 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 20px;
-            color: #004d2e;
+        .entry {
+            border: 1px solid #e7e7e7;
+            padding: 14px 16px;
         }
 
-        ul {
-            list-style: none;
+        .entry-text {
+            color: #111;
+            line-height: 1.6;
+            word-break: break-word;
         }
 
-        li {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        li:last-child {
-            border-bottom: none;
-        }
-
-        .item-title {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .item-title a {
+        .entry-link {
             color: #00693E;
             text-decoration: none;
-            font-size: 1.05rem;
         }
 
-        .item-title a:hover {
+        .entry-link:hover {
             text-decoration: underline;
         }
 
-        .item-title a:hover::before {
-            content: '> ';
-        }
-
-        .item-note {
+        .entry-note {
+            margin-top: 6px;
             color: #666;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 0.88rem;
         }
 
-        /* Empty state */
         .empty {
             color: #999;
             font-style: italic;
+            border: 1px dashed #ddd;
+            padding: 14px 16px;
         }
 
-        /* Footer */
         footer {
-            margin-top: 80px;
+            margin-top: 60px;
             padding-top: 30px;
             border-top: 1px solid #e0e0e0;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
             font-size: 0.9rem;
-        }
-
-        .footer-item {
             color: #666;
         }
 
-        .footer-item a {
+        footer a {
             color: #00693E;
+            text-decoration: none;
         }
 
-        /* Mobile */
+        footer a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 40px 20px;
@@ -157,48 +131,72 @@
                 font-size: 1.5rem;
             }
         }
-
     </style>
 </head>
 
 <body>
     <div class="container">
         <a href="index.html" class="back-link">← Back</a>
-        
-        <h1>Cool Finds</h1>
-        <p class="tagline">a bookmark for your thoughts</p>
 
-        <section>
-            <h2>Links</h2>
-            <ul>
-                <li>
-                    <span class="item-title"><a href="#">Placeholder Link</a></span>
-                    <span class="item-note">A placeholder for future discoveries.</span>
-                </li>
-            </ul>
-        </section>
+        <h1 id="board-title">Cool Finds</h1>
+        <p class="tagline" id="board-subtitle">pasteboard</p>
 
-        <section>
-            <h2>Quotes</h2>
-            <ul>
-                <li class="empty">Nothing here yet.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Tools</h2>
-            <ul>
-                <li class="empty">Nothing here yet.</li>
-            </ul>
-        </section>
+        <div class="board" id="board-entries"></div>
 
         <footer>
-            <div class="footer-content">
-                <span class="footer-item"><a href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></span>
-            </div>
+            <a href="mailto:me@faizanxmd.online">me@faizanxmd.online</a>
         </footer>
     </div>
 
+    <script src="assets/cool-finds-board.js"></script>
+    <script>
+        const board = window.COOL_FINDS_BOARD || { title: 'Cool Finds', subtitle: 'pasteboard', entries: [] };
+
+        const titleEl = document.getElementById('board-title');
+        const subtitleEl = document.getElementById('board-subtitle');
+        const entriesEl = document.getElementById('board-entries');
+
+        titleEl.textContent = board.title || 'Cool Finds';
+        subtitleEl.textContent = board.subtitle || 'pasteboard';
+
+        const entries = Array.isArray(board.entries) ? board.entries : [];
+
+        if (entries.length === 0) {
+            const empty = document.createElement('div');
+            empty.className = 'empty';
+            empty.textContent = 'No entries yet. Add items in assets/cool-finds-board.js';
+            entriesEl.appendChild(empty);
+        }
+
+        entries.forEach((item) => {
+            const card = document.createElement('article');
+            card.className = 'entry';
+
+            const text = document.createElement('div');
+            text.className = 'entry-text';
+
+            if (item.href) {
+                const link = document.createElement('a');
+                link.className = 'entry-link';
+                link.href = item.href;
+                link.textContent = item.text || item.href;
+                text.appendChild(link);
+            } else {
+                text.textContent = item.text || '';
+            }
+
+            card.appendChild(text);
+
+            if (item.note) {
+                const note = document.createElement('div');
+                note.className = 'entry-note';
+                note.textContent = item.note;
+                card.appendChild(note);
+            }
+
+            entriesEl.appendChild(card);
+        });
+    </script>
     <script src="assets/easter-eggs.js" defer></script>
 </body>
 
