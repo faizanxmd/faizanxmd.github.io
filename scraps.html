@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faizan</title>
+    <title>Scraps - Faizan</title>
     <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,34 +41,33 @@
             padding: 60px 20px 40px;
         }
 
+        /* Back link */
+        .back-link {
+            margin-bottom: 40px;
+        }
+
+        .back-link a {
+            color: #00693E;
+            text-decoration: none;
+        }
+
+        .back-link a:hover::before {
+            content: '< ';
+        }
+
         /* Header */
         header {
             margin-bottom: 50px;
         }
 
-        .site-name {
-            font-size: 2.5rem;
+        .page-title {
+            font-size: 2rem;
             font-weight: 400;
             margin-bottom: 8px;
             color: #000000;
         }
 
-        .site-subline {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .cursor {
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        /* Single column sections */
+        /* Sections */
         section {
             margin-bottom: 40px;
         }
@@ -80,15 +79,6 @@
             letter-spacing: 0.08em;
             margin-bottom: 12px;
             color: #004d2e;
-        }
-
-        h2 a {
-            color: inherit;
-        }
-
-        p {
-            color: #00693E;
-            line-height: 1.7;
         }
 
         ul {
@@ -149,8 +139,8 @@
                 padding: 40px 20px;
             }
 
-            .site-name {
-                font-size: 2rem;
+            .page-title {
+                font-size: 1.75rem;
             }
         }
 
@@ -159,72 +149,52 @@
 
 <body>
     <div class="container">
+        <div class="back-link">
+            <a href="index.html">← Back</a>
+        </div>
+
         <header>
-            <h1 class="site-name" id="site-name"><span class="cursor">█</span></h1>
+            <h1 class="page-title">Scraps</h1>
         </header>
 
-        <!-- WRITING Section -->
+        <!-- READING Section -->
         <section>
-            <h2>Writing</h2>
+            <h2>Reading</h2>
             <ul>
-                <li><a href="articles/us-election.html">US Election 2024</a></li>
+                <li><a href="https://beej.us/guide/bgc/">Beej's Guide to C</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/The_Stand">The Stand</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind">Sapiens</a></li>
             </ul>
         </section>
 
-        <!-- WORKBENCH Section -->
+        <!-- SIGNAL Section -->
         <section>
-            <h2><a href="#">Workbench</a></h2>
+            <h2>Signal</h2>
+            <ul>
+                <li><a href="https://grahamduncan.blog/whats-going-on-here/">What's Going On Here? (Graham Duncan)</a></li>
+                <li><a href="https://robinhome.vercel.app/">Lil Mo</a></li>
+            </ul>
         </section>
 
-        <!-- SCRAPS Section -->
+        <!-- HEAVY ROTATION Section -->
         <section>
-            <h2><a href="scraps.html">Scraps</a></h2>
-        </section>
-
-        <!-- About Section -->
-        <section>
-            <h2><a href="about.html">About</a></h2>
+            <h2>Heavy Rotation</h2>
+            <ul>
+                <li><a href="https://youtu.be/1lyu1KKwC74">Bitter Sweet Symphony</a></li>
+                <li><a href="https://youtube.com/playlist?list=PLL-NbN8uTOigsPnqWhPLWJ4ADAkmNbrQI">Rubber Soul (Album)</a></li>
+                <li><a href="https://www.youtube.com/watch?v=TRJ_s2G76Hg">Far From Any Road</a></li>
+                <li><a href="https://www.youtube.com/watch?v=McvdQYzlLM8">ants in my room</a></li>
+            </ul>
         </section>
 
         <footer>
             <div class="footer-content">
-                <span class="footer-item"><a id="footer-email" href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></span>
-                <span class="built-in" id="built-in-text">Built in Mathikere</span>
+                <span class="footer-item"><a href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></span>
+                <span class="built-in">Built in Mathikere</span>
             </div>
         </footer>
     </div>
 
-    <script>
-        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-        async function typeWriter(element, text) {
-            const cursor = '<span class="cursor">█</span>';
-            
-            for (let i = 0; i <= text.length; i++) {
-                element.innerHTML = text.substring(0, i) + cursor;
-                await sleep(100);
-            }
-        }
-
-        async function animateHeader() {
-            const h1 = document.getElementById('site-name');
-            const cursor = '<span class="cursor">█</span>';
-            
-            await typeWriter(h1, "Faizn");
-            await sleep(800);
-            h1.innerHTML = "Faiz" + cursor;
-            await sleep(100);
-            h1.innerHTML = "Faiza" + cursor;
-            await sleep(100);
-            h1.innerHTML = "Faizan" + cursor;
-            await sleep(300);
-            h1.innerHTML = "Faizan." + cursor;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(animateHeader, 300);
-        });
-    </script>
     <script src="assets/easter-eggs.js" defer></script>
 </body>
 

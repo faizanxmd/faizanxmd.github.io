@@ -7,53 +7,43 @@
     <link rel="icon" type="image/jpeg" href="../assets/favicon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/easter-eggs.css">
     <style>
-        /* ========================================
-           CSS VARIABLES - LIGHT & DARK MODE
-           ======================================== */
+        /* CSS Variables for Light/Dark Mode */
         :root {
-            /* Light Mode Colors */
-            --bg: #ffffff;
-            --text: #292929;
-            --text-muted: #757575;
-            --heading: #000000;
-            --heading-secondary: #1a1a1a;
-            --bold: #000000;
-            --link: #000000;
-            --link-underline: #000000;
-            --border: #e0e0e0;
-            --blockquote-border: #000000;
+            --bg-color: #FFFFFF;
+            --text-color: #111111;
+            --text-secondary: #444444;
+            --heading-color: #000000;
+            --heading-secondary: #111111;
+            --link-color: #111111;
+            --border-color: #e5e5e5;
+            --blockquote-border: #1f1f1f;
+            --nav-color: #666;
+            --nav-hover: #00693E;
+            --footer-color: #666;
             --selection-bg: #00693E;
-            --selection-text: #ffffff;
+            --selection-text: #FFFFFF;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                /* Dark Mode Colors - Warm, NOT blue */
-                --bg: #0d1117;
-                --text: #d4d4d8;
-                --text-muted: #8b949e;
-                --heading: #f0f6fc;
+                --bg-color: #0d1117;
+                --text-color: #c9d1d9;
+                --text-secondary: #8b949e;
+                --heading-color: #f0f6fc;
                 --heading-secondary: #e6edf3;
-                --bold: #ffa657;
-                --link: #58a6ff;
-                --link-underline: #58a6ff;
-                --border: #30363d;
+                --bold-color: #ffa657;
+                --link-color: #58a6ff;
+                --border-color: #30363d;
                 --blockquote-border: #484f58;
+                --nav-color: #8b949e;
+                --nav-hover: #58a6ff;
+                --footer-color: #8b949e;
                 --selection-bg: #238636;
                 --selection-text: #ffffff;
             }
-        }
-
-        /* ========================================
-           BASE STYLES
-           ======================================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
         }
 
         ::selection {
@@ -67,204 +57,180 @@
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
-            font-size: 18px;
-            line-height: 1.7;
-            max-width: 700px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0 auto;
             padding: 50px 20px;
+            max-width: 700px;
+            line-height: 1.7;
+            font-size: 1.125rem;
+            font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
             transition: background-color 0.2s ease, color 0.2s ease;
         }
 
-        /* ========================================
-           MONO FONT ELEMENTS
-           ======================================== */
         .nav-top,
-        h1, h2, h3, h4,
+        h1,
+        h2,
+        h3,
         .date-line,
         footer {
             font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace;
         }
 
-        /* ========================================
-           NAVIGATION
-           ======================================== */
         .nav-top {
-            font-size: 14px;
-            margin-bottom: 40px;
-        }
-
-        .nav-top a {
-            color: var(--text-muted);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .nav-top a:hover {
-            color: var(--heading);
-            border-bottom-color: var(--heading);
-        }
-
-        /* ========================================
-           TYPOGRAPHY HIERARCHY
-           ======================================== */
-        
-        /* H1 - Article Title */
-        h1 {
-            font-size: 36px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            color: var(--heading);
-            margin-bottom: 12px;
-        }
-
-        /* H2 - Major Sections */
-        h2 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.3;
-            color: var(--heading);
-            margin-top: 48px;
-            margin-bottom: 16px;
-        }
-
-        /* H3 - Subsections */
-        h3 {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            line-height: 1.3;
-            color: var(--heading-secondary);
-            margin-top: 32px;
-            margin-bottom: 12px;
-        }
-
-        /* Date Line */
-        .date-line {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 40px;
+            font-size: 0.92rem;
+            margin-bottom: 34px;
+            color: var(--nav-color);
             display: block;
         }
 
-        /* ========================================
-           BODY TEXT
-           ======================================== */
-        p {
-            font-size: 18px;
-            line-height: 1.7;
-            color: var(--text);
-            margin-bottom: 24px;
+        .nav-top a {
+            color: var(--nav-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
         }
 
-        /* BOLD TEXT - Different color in dark mode */
-        strong, b {
+        .nav-top a:hover {
+            color: var(--nav-hover);
+            border-bottom: 1px solid var(--nav-hover);
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            line-height: 1.2;
+            margin-bottom: 8px;
             font-weight: 700;
-            color: var(--bold);
+            color: var(--heading-color);
+            letter-spacing: -0.02em;
         }
 
-        /* ========================================
-           LINKS
-           ======================================== */
-        a.text-link {
-            color: var(--link);
-            text-decoration: underline;
-            text-decoration-color: var(--link-underline);
-            text-underline-offset: 3px;
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--heading-color);
+            line-height: 1.3;
         }
 
-        a.text-link:hover {
-            opacity: 0.8;
+        h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: -0.01em;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--heading-secondary);
+            line-height: 1.3;
         }
 
-        /* ========================================
-           BLOCKQUOTE
-           ======================================== */
-        blockquote {
-            border-left: 3px solid var(--blockquote-border);
-            margin: 32px 0;
-            padding: 0 0 0 20px;
-            font-style: italic;
-            color: var(--text-muted);
-            font-size: 16px;
-            line-height: 1.6;
+        .date-line {
+            font-size: 0.85rem;
+            color: var(--nav-color);
+            margin-bottom: 34px;
+            display: block;
         }
 
-        /* ========================================
-           LISTS
-           ======================================== */
-        ul, ol {
-            margin-bottom: 24px;
-            padding-left: 28px;
-        }
-
-        li {
-            margin-bottom: 12px;
-            color: var(--text);
-            line-height: 1.7;
-        }
-
-        /* ========================================
-           IMAGES
-           ======================================== */
         img {
             width: 100%;
             height: auto;
             display: block;
-            margin: 0 0 32px 0;
-            border: 1px solid var(--border);
+            margin: 0 0 34px 0;
+            border: 1px solid var(--border-color);
         }
 
-        /* ========================================
-           FOOTER
-           ======================================== */
+        a.text-link {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-decoration-color: var(--link-color);
+            text-underline-offset: 2px;
+        }
+
+        a.text-link:hover {
+            color: var(--link-color);
+        }
+
+        blockquote {
+            border-left: 2px solid var(--blockquote-border);
+            margin: 30px 0;
+            padding: 2px 0 2px 16px;
+            font-style: normal;
+            color: var(--text-secondary);
+            font-size: 0.94em;
+        }
+
+        ul {
+            margin-bottom: 1.5rem;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            margin-top: 0;
+            color: var(--text-color);
+        }
+
+        strong {
+            font-weight: 700;
+            color: var(--heading-color);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            strong {
+                color: var(--bold-color);
+            }
+        }
+
         footer {
-            margin-top: 64px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border);
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
             font-size: 14px;
-            color: var(--text-muted);
+            color: var(--footer-color);
         }
 
-        footer a {
-            color: var(--text);
+        /* Dark mode specific adjustments */
+        @media (prefers-color-scheme: dark) {
+            body {
+                font-weight: 400;
+            }
+            
+            h1, h2, h3 {
+                font-weight: 700;
+            }
         }
 
-        /* ========================================
-           MOBILE RESPONSIVE
-           ======================================== */
         @media (max-width: 600px) {
             body {
-                padding: 32px 20px;
-                font-size: 17px;
+                padding: 40px 20px;
+                font-size: 1.0625rem;
+                line-height: 1.75;
             }
 
             h1 {
-                font-size: 28px;
+                font-size: 1.85rem;
             }
-
+            
             h2 {
-                font-size: 24px;
-                margin-top: 40px;
+                font-size: 1.5rem;
+                margin-top: 2rem;
             }
-
+            
             h3 {
-                font-size: 20px;
-                margin-top: 28px;
-            }
-
-            p {
-                font-size: 17px;
+                font-size: 1.2rem;
+                margin-top: 1.75rem;
             }
         }
     </style>
 </head>
-<body>
+<body data-matrix="off">
 
     <div class="nav-top">
         <a href="../index.html">← return 0;</a>
@@ -287,7 +253,7 @@
         </p>
 
         <p>
-            After the results came out, numerous reasons for Trump's victory are being discussed. This article doesn't aim to list those common reasons or present new insights.
+            After the results came out, numerous reasons for Trump’s victory are being discussed. This article doesn’t aim to list those common reasons or present new insights.
         </p>
 
         <p>
@@ -320,7 +286,7 @@
         <h2>Voter Dynamics</h2>
 
         <p>
-            I have divided a particular front's voter base into 2 parts and now we will discuss them with the help of examples of inflation and immigration.
+            I have divided a particular front’s voter base into 2 parts and now we will discuss them with the help of examples of inflation and immigration.
         </p>
 
         <p><strong>1. Ideological Voters</strong></p>
@@ -337,7 +303,7 @@
         </p>
         <ul>
             <li>
-                <strong>Objective Voters:</strong> They don't align with any ideology. They assess each election independently and vote based purely on merit.
+                <strong>Objective Voters:</strong> They don’t align with any ideology. They assess each election independently and vote based purely on merit.
             </li>
             <li>
                 <strong>Swing Leaners:</strong> They may temporarily align with a particular ideology, swayed by specific issues or emotional appeals.
@@ -370,7 +336,7 @@
     </main>
 
     <footer>
-        © 2026 Faizan. <a href="mailto:me@faizanxmd.online" class="text-link">Reply via Email</a>
+        &copy; 2026 Faizan. <a href="mailto:me@faizanxmd.online" class="text-link">Reply via Email</a>
     </footer>
 
     <script src="../assets/easter-eggs.js" defer></script>
