@@ -64,8 +64,16 @@
         }
 
         @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
         }
 
         /* Single column sections */
@@ -153,11 +161,11 @@
                 font-size: 2rem;
             }
         }
-
     </style>
 </head>
 
 <body>
+    <script>try { if (localStorage.getItem('dark-mode') === '1') document.body.classList.add('dark-mode') } catch (e) { }</script>
     <div class="container">
         <header>
             <h1 class="site-name" id="site-name"><span class="cursor">█</span></h1>
@@ -188,7 +196,8 @@
 
         <footer>
             <div class="footer-content">
-                <span class="footer-item"><a id="footer-email" href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></span>
+                <span class="footer-item"><a id="footer-email"
+                        href="mailto:me@faizanxmd.online">me@faizanxmd.online</a></span>
                 <span class="built-in" id="built-in-text">Built in Mathikere</span>
             </div>
         </footer>
@@ -199,7 +208,7 @@
 
         async function typeWriter(element, text) {
             const cursor = '<span class="cursor">█</span>';
-            
+
             for (let i = 0; i <= text.length; i++) {
                 element.innerHTML = text.substring(0, i) + cursor;
                 await sleep(100);
@@ -209,7 +218,7 @@
         async function animateHeader() {
             const h1 = document.getElementById('site-name');
             const cursor = '<span class="cursor">█</span>';
-            
+
             await typeWriter(h1, "Faizn");
             await sleep(800);
             h1.innerHTML = "Faiz" + cursor;
