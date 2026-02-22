@@ -1,163 +1,130 @@
 /* ========================================
-   MODE INDICATOR (toast)
+   DARK MODE
+   Grey text + muted green accent
    ======================================== */
-.mode-indicator {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #00693e;
-    color: #ffffff;
-    padding: 8px 14px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    pointer-events: none;
-    z-index: 1000;
-}
 
-.mode-indicator.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ========================================
-   DARK MODE — BASE
-   ======================================== */
 body.dark-mode {
-    background-color: #0d1117;
-    color: #c9d1d9;
+    background-color: #111111;
+    color: #D4D4D4;
 }
 
 body.dark-mode ::selection,
 body.dark-mode ::-moz-selection {
-    background-color: #238636;
-    color: #ffffff;
+    background-color: #2D5F3F;
+    color: #FFFFFF;
 }
 
-/* ========================================
-   DARK MODE — TYPOGRAPHY
-   ======================================== */
-body.dark-mode .site-name,
-body.dark-mode .page-title,
+/* Headings */
 body.dark-mode h1,
-body.dark-mode h3 {
-    color: #c9d1d9;
+body.dark-mode .site-name,
+body.dark-mode .page-title {
+    color: #E5E5E5;
 }
 
 body.dark-mode h2 {
-    color: #7ee787;
+    color: #5ABA7A;
 }
 
+body.dark-mode h3 {
+    color: #E5E5E5;
+}
+
+/* Links & list items */
+body.dark-mode a,
+body.dark-mode li,
+body.dark-mode p {
+    color: #5ABA7A;
+}
+
+/* Muted text */
 body.dark-mode .site-subline,
 body.dark-mode .tagline,
-body.dark-mode .back-link,
-body.dark-mode .back-link a,
-body.dark-mode .item-note,
-body.dark-mode .empty,
 body.dark-mode .footer-item,
 body.dark-mode .built-in,
-body.dark-mode .nav-top,
 body.dark-mode .date-line,
-body.dark-mode footer {
-    color: #8b949e;
+body.dark-mode .nav-top,
+body.dark-mode .back-link,
+body.dark-mode .back-link a,
+body.dark-mode .entry-note,
+body.dark-mode .empty {
+    color: #888888;
 }
 
-body.dark-mode p,
-body.dark-mode li,
-body.dark-mode a,
-body.dark-mode .item-title a,
-body.dark-mode a.text-link,
+/* Nav & hover */
 body.dark-mode .nav-top a {
-    color: #58a6ff;
+    color: #888888;
 }
 
-body.dark-mode a.text-link {
-    text-decoration-color: #58a6ff;
-}
-
-/* ========================================
-   DARK MODE — INTERACTIVE STATES
-   ======================================== */
-body.dark-mode .back-link:hover,
-body.dark-mode .back-link a:hover,
-body.dark-mode .item-title a:hover,
 body.dark-mode .nav-top a:hover,
-body.dark-mode a.text-link:hover {
-    color: #79c0ff;
-    border-bottom-color: #79c0ff;
+body.dark-mode .back-link a:hover,
+body.dark-mode a:hover {
+    color: #7CD49A;
 }
 
-/* ========================================
-   DARK MODE — BORDERS & BLOCKQUOTES
-   ======================================== */
-body.dark-mode li,
+/* Borders */
 body.dark-mode footer {
-    border-color: #30363d;
+    border-color: #2A2A2A;
+    color: #888888;
 }
 
-body.dark-mode blockquote {
-    border-left-color: #c9d1d9;
-    color: #c9d1d9;
+body.dark-mode footer a {
+    color: #5ABA7A;
 }
 
-body.dark-mode .profile-photo {
-    border-color: #30363d;
-}
-
-/* ========================================
-   DARK MODE — COOL FINDS PAGE
-   ======================================== */
 body.dark-mode .entry {
-    border-color: #30363d;
-    background-color: #161b22;
+    border-color: #2A2A2A;
+    background-color: #1A1A1A;
 }
 
 body.dark-mode .entry-text {
-    color: #c9d1d9;
+    color: #D4D4D4;
 }
 
 body.dark-mode .entry-link {
-    color: #58a6ff;
+    color: #5ABA7A;
 }
 
-body.dark-mode .entry-link:hover {
-    color: #79c0ff;
+body.dark-mode .profile-photo {
+    border-color: #2A2A2A;
 }
 
-body.dark-mode .entry-note {
-    color: #8b949e;
+/* Blockquote */
+body.dark-mode blockquote {
+    border-left-color: #2A2A2A;
+    color: #888888;
 }
 
-body.dark-mode .empty {
-    color: #8b949e;
-    border-color: #30363d;
+/* Bold / strong */
+body.dark-mode strong,
+body.dark-mode b {
+    color: #E5E5E5;
 }
 
-/* ========================================
-   DARK MODE — ARTICLE PAGE (Variables)
-   ======================================== */
+/* Article page — CSS variable overrides */
 body.dark-mode {
-    --bg: #0d1117;
-    --text: #d4d4d8;
-    --text-muted: #8b949e;
-    --heading: #f0f6fc;
-    --heading-secondary: #e6edf3;
-    --bold: #ffa657;
-    --link: #58a6ff;
-    --link-underline: #58a6ff;
-    --border: #30363d;
-    --blockquote-border: #484f58;
-    --selection-bg: #238636;
-    --selection-text: #ffffff;
+    --bg: #111111;
+    --text: #D4D4D4;
+    --text-muted: #888888;
+    --heading: #E5E5E5;
+    --heading-secondary: #E5E5E5;
+    --bold: #E5E5E5;
+    --link: #5ABA7A;
+    --link-underline: #5ABA7A;
+    --border: #2A2A2A;
+    --blockquote-border: #2A2A2A;
+    --selection-bg: #2D5F3F;
+    --selection-text: #FFFFFF;
 }
 
 body.dark-mode img {
-    border-color: #30363d;
+    border-color: #2A2A2A;
 }
 
-body.dark-mode strong,
-body.dark-mode b {
-    color: #ffa657;
+body.dark-mode a.text-link {
+    color: #5ABA7A;
+    text-decoration-color: #5ABA7A;
+}
+
+body.dark-mode a.text-link:hover {
+    color: #7CD49A;
 }
