@@ -4,18 +4,32 @@
 <head>
     <script>
         (function () {
-            var override = localStorage.getItem('color-scheme');
-            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (override === 'dark' || (!override && prefersDark)) {
-                document.documentElement.classList.add('dark-mode');
+            function applyScheme() {
+                var stored = localStorage.getItem('color-scheme');
+                var osDark = window.matchMedia(
+                    '(prefers-color-scheme: dark)'
+                ).matches;
+                var useDark =
+                    stored === 'dark' ? true
+                        : stored === 'light' ? false
+                            : osDark;
+
+                document.documentElement.classList.toggle('dark-mode', useDark);
             }
+
+            applyScheme();
+
+            // bfcache fix — re-apply when restored from back/forward cache
+            window.addEventListener('pageshow', function (e) {
+                if (e.persisted) applyScheme();
+            });
         })();
     </script>
     <style>
         html.dark-mode {
             --color-bg: #0d1117;
             --color-text: #c9d1d9;
-            --color-accent: #58a6ff;
+            --color-accent: #5aba7a;
             --color-muted: #8b949e;
         }
     </style>
@@ -42,13 +56,13 @@
         }
 
         ::selection {
-            background-color: var(--color-accent);
-            color: var(--color-bg);
+            background-color: #00693e;
+            color: #fff;
         }
 
         ::-moz-selection {
-            background-color: var(--color-accent);
-            color: var(--color-bg);
+            background-color: #00693e;
+            color: #fff;
         }
 
         body {
@@ -125,7 +139,7 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 12px;
-            color: #004d2e;
+            color: var(--color-accent);
         }
 
         h2 a {
