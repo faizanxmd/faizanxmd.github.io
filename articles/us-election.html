@@ -61,12 +61,13 @@
             position: fixed;
             inset: 0;
             background: var(--color-bg);
-            color: var(--color-text);
             font-family: 'IBM Plex Mono', 'Courier New', monospace;
             font-size: 14px;
-            padding: 2rem;
             z-index: 9999;
             box-sizing: border-box;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-accent);
         }
 
         /* ========================================
@@ -230,7 +231,7 @@
            ======================================== */
         @media (max-width: 680px) {
             #mobile-block {
-                display: block;
+                display: flex;
             }
 
             body {
