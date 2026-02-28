@@ -17,26 +17,33 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --color-bg: #ffffff;
+            --color-text: #000000;
+            --color-accent: #00693e;
+            --color-muted: #666666;
+        }
+
         ::selection {
-            background-color: #00693E;
-            color: #FFFFFF;
+            background-color: var(--color-accent);
+            color: var(--color-bg);
         }
 
         ::-moz-selection {
-            background-color: #00693E;
-            color: #FFFFFF;
+            background-color: var(--color-accent);
+            color: var(--color-bg);
         }
 
         body {
-            background-color: #FFFFFF;
-            color: #000000;
+            background-color: var(--color-bg);
+            color: var(--color-text);
             font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace;
             font-size: 16px;
             line-height: 1.6;
         }
 
         .container {
-            max-width: 720px;
+            max-width: 680px;
             margin: 0 auto;
             padding: 60px 20px 40px;
         }
@@ -47,7 +54,7 @@
         }
 
         .back-link a {
-            color: #00693E;
+            color: var(--color-accent);
             text-decoration: none;
         }
 
@@ -64,7 +71,7 @@
             font-size: 2rem;
             font-weight: 400;
             margin-bottom: 8px;
-            color: #000000;
+            color: var(--color-text);
         }
 
         /* Sections */
@@ -87,11 +94,11 @@
 
         li {
             margin-bottom: 6px;
-            color: #00693E;
+            color: var(--color-accent);
         }
 
         a {
-            color: #00693E;
+            color: var(--color-accent);
             text-decoration: none;
             transition: all 0.15s ease;
         }
@@ -119,11 +126,11 @@
         }
 
         .footer-item {
-            color: #666;
+            color: var(--color-muted);
         }
 
         .footer-item a {
-            color: #00693E;
+            color: var(--color-accent);
         }
 
         .built-in {

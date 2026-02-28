@@ -17,19 +17,26 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --color-bg: #ffffff;
+            --color-text: #000000;
+            --color-accent: #00693e;
+            --color-muted: #666666;
+        }
+
         ::selection {
-            background-color: #00693E;
-            color: #FFFFFF;
+            background-color: var(--color-accent);
+            color: var(--color-bg);
         }
 
         ::-moz-selection {
-            background-color: #00693E;
-            color: #FFFFFF;
+            background-color: var(--color-accent);
+            color: var(--color-bg);
         }
 
         body {
-            background-color: #FFFFFF;
-            color: #000000;
+            background-color: var(--color-bg);
+            color: var(--color-text);
             font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace;
             font-size: 16px;
             line-height: 1.6;
@@ -48,7 +55,7 @@
         }
 
         a {
-            color: #00693E;
+            color: var(--color-accent);
             text-decoration: none;
             transition: all 0.15s ease;
         }
@@ -69,7 +76,7 @@
         .profile-photo {
             width: 100%;
             filter: grayscale(100%);
-            border: 1px solid #000000;
+            border: 1px solid var(--color-text);
             margin-bottom: 25px;
         }
 
@@ -85,8 +92,14 @@
         <a href="index.html" class="back-link">← Back</a>
         <h1>About Me</h1>
         <img src="assets/mun-photo.jpg" alt="Faizan at MUN" class="profile-photo">
-        <p class="about-text">This is Faizan.engineering student at msrit.
-            ahh and this is an old photo from school MUN.</p>
+        <p class="about-text">
+            Engineering student at MSRIT, Mathikere. Schooled here too. At this point I'm basically embedded in this
+            place.
+        </p>
+        <br>
+        <p class="about-text">
+            That's a photo from a school MUN — high school, different time.
+        </p>
     </div>
 
 
