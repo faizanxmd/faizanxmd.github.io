@@ -48,6 +48,19 @@
             padding: 60px 20px;
         }
 
+        #mobile-block {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 14px;
+            padding: 2rem;
+            z-index: 9999;
+            box-sizing: border-box;
+        }
+
         h1 {
             font-size: 2rem;
             font-weight: 400;
@@ -83,10 +96,17 @@
         .about-text {
             line-height: 1.8;
         }
+
+        @media (max-width: 680px) {
+            #mobile-block {
+                display: block;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div id="mobile-block">This site is meant to be read on a desktop.</div>
 
     <div class="container">
         <a href="index.html" class="back-link">← Back</a>

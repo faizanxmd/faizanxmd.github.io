@@ -56,6 +56,19 @@
             padding: 50px 20px;
         }
 
+        #mobile-block {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 14px;
+            padding: 2rem;
+            z-index: 9999;
+            box-sizing: border-box;
+        }
+
         /* ========================================
            NAVIGATION
            ======================================== */
@@ -215,7 +228,11 @@
         /* ========================================
            MOBILE RESPONSIVE
            ======================================== */
-        @media (max-width: 600px) {
+        @media (max-width: 680px) {
+            #mobile-block {
+                display: block;
+            }
+
             body {
                 padding: 32px 20px;
                 font-size: 17px;
@@ -243,6 +260,7 @@
 </head>
 
 <body>
+    <div id="mobile-block">This site is meant to be read on a desktop.</div>
 
 
     <div class="nav-top">

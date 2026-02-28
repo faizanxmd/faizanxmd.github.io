@@ -48,6 +48,19 @@
             padding: 60px 20px 40px;
         }
 
+        #mobile-block {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 14px;
+            padding: 2rem;
+            z-index: 9999;
+            box-sizing: border-box;
+        }
+
         /* Header */
         header {
             margin-bottom: 50px;
@@ -159,7 +172,11 @@
         }
 
         /* Mobile */
-        @media (max-width: 600px) {
+        @media (max-width: 680px) {
+            #mobile-block {
+                display: block;
+            }
+
             .container {
                 padding: 40px 20px;
             }
@@ -172,6 +189,7 @@
 </head>
 
 <body>
+    <div id="mobile-block">This site is meant to be read on a desktop.</div>
 
     <div class="container">
         <header>
