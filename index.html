@@ -2,9 +2,6 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faizan</title>
     <script>
         (function () {
             var override = localStorage.getItem('color-scheme');
@@ -14,6 +11,17 @@
             }
         })();
     </script>
+    <style>
+        html.dark-mode {
+            --color-bg: #0d1117;
+            --color-text: #c9d1d9;
+            --color-accent: #58a6ff;
+            --color-muted: #8b949e;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faizan</title>
     <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -271,7 +279,7 @@
     </script>
     <script>
         document.addEventListener('keydown', function (e) {
-            if (e.key === '~') {
+            if (e.key === '`') {
                 var current = localStorage.getItem('color-scheme');
                 var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                 if (!current) {
@@ -281,7 +289,9 @@
                 } else {
                     localStorage.removeItem('color-scheme');
                 }
-                document.documentElement.classList.toggle('dark-mode', localStorage.getItem('color-scheme') === 'dark' || (!localStorage.getItem('color-scheme') && prefersDark));
+                var override = localStorage.getItem('color-scheme');
+                var shouldDark = override === 'dark' || (!override && prefersDark);
+                document.documentElement.classList.toggle('dark-mode', shouldDark);
             }
         });
     </script>
