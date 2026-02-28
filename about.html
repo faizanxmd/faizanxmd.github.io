@@ -5,6 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Faizan</title>
+    <script>
+        (function () {
+            var override = localStorage.getItem('color-scheme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (override === 'dark' || (!override && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
     <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -123,7 +132,22 @@
         </p>
     </div>
 
-
+    <script>
+        document.addEventListener('keydown', function (e) {
+            if (e.key === '~') {
+                var current = localStorage.getItem('color-scheme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (!current) {
+                    localStorage.setItem('color-scheme', prefersDark ? 'light' : 'dark');
+                } else if (current === 'dark') {
+                    localStorage.setItem('color-scheme', 'light');
+                } else {
+                    localStorage.removeItem('color-scheme');
+                }
+                document.documentElement.classList.toggle('dark-mode', localStorage.getItem('color-scheme') === 'dark' || (!localStorage.getItem('color-scheme') && prefersDark));
+            }
+        });
+    </script>
 </body>
 
 </html>
