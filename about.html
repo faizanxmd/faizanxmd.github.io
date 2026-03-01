@@ -129,6 +129,54 @@
             line-height: 1.8;
         }
 
+        .footer-location {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .footer-location::before {
+            content: "> ";
+            color: var(--color-accent);
+        }
+
+        .footer-location::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(0, 105, 62, 0.55),
+                    transparent);
+            transform: skewX(-15deg);
+            pointer-events: none;
+        }
+
+        .footer-location:hover::after {
+            animation: shine 0.7s ease forwards;
+        }
+
+        html.dark-mode .footer-location::after {
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(90, 186, 122, 0.45),
+                    transparent);
+        }
+
+        @keyframes shine {
+            0% {
+                left: -60%;
+            }
+
+            100% {
+                left: 150%;
+            }
+        }
+
         @media (max-width: 680px) {
             #mobile-block {
                 display: flex;
@@ -152,6 +200,11 @@
         <p class="about-text">
             That's a photo from a school MUN — high school, different time.
         </p>
+
+        <br><br>
+        <footer>
+            <span class="footer-location">Built in Mathikere</span>
+        </footer>
     </div>
 
     <script>
