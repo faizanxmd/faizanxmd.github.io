@@ -1,0 +1,380 @@
+/* ============================================
+   faizanxmd.online — shared styles
+   One file to rule all pages. Edit here once.
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Light: warm paper, ink text, forest accent */
+    --color-bg: #F6F4ED;
+    --color-text: #21201C;
+    --color-accent: #00693e;
+    --color-muted: #77746A;
+    --color-faint: #E4E1D6;
+    --color-card: #FDFCF8;
+}
+
+html.dark-mode {
+    /* Dark: warm charcoal, phosphor green */
+    --color-bg: #141412;
+    --color-text: #D6D3C9;
+    --color-accent: #5ABA7A;
+    --color-muted: #8B8878;
+    --color-faint: #2A2A26;
+    --color-card: #1B1B18;
+}
+
+::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+}
+
+html {
+    scrollbar-gutter: stable;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 16px;
+    line-height: 1.6;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 20px 40px;
+}
+
+/* ---------- header ---------- */
+
+header {
+    margin-bottom: 50px;
+}
+
+.site-name,
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: var(--color-text);
+}
+
+.page-title {
+    font-size: 2rem;
+}
+
+.page-subline,
+.site-subline {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+}
+
+.cursor {
+    animation: blink 1s step-end infinite;
+    color: var(--color-accent);
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ---------- links: only links are green ---------- */
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:hover::before {
+    content: '> ';
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 40px;
+    font-size: 0.9rem;
+}
+
+.back-link a:hover::before {
+    content: '< ';
+}
+
+/* ---------- sections ---------- */
+
+section {
+    margin-bottom: 44px;
+}
+
+h2 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    color: var(--color-muted);
+}
+
+h2 a {
+    color: var(--color-accent);
+}
+
+p {
+    color: var(--color-text);
+    line-height: 1.7;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    margin-bottom: 10px;
+    color: var(--color-text);
+}
+
+.note {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+}
+
+.date {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    margin-right: 8px;
+}
+
+/* homepage index sections */
+.index-section p {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    margin-top: 2px;
+}
+
+.index-section h2 {
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+}
+
+/* ---------- pasteboard (cool finds) ---------- */
+
+.board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.entry {
+    background: var(--color-card);
+    border: 1px dashed var(--color-muted);
+    padding: 16px 18px;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.entry:nth-child(3n+1) { transform: rotate(-0.6deg); }
+.entry:nth-child(3n+2) { transform: rotate(0.5deg); }
+.entry:nth-child(3n)   { transform: rotate(-0.3deg); }
+
+.entry:hover {
+    transform: rotate(0deg) translateY(-2px);
+    border-color: var(--color-accent);
+}
+
+.entry-text {
+    color: var(--color-text);
+}
+
+.entry-note {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--color-muted);
+}
+
+.empty {
+    color: var(--color-muted);
+    font-style: italic;
+}
+
+/* ---------- about ---------- */
+
+.profile-photo {
+    filter: grayscale(100%);
+    border: 1px solid var(--color-text);
+}
+
+.about-row {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.about-row .profile-photo {
+    width: 160px;
+    flex-shrink: 0;
+}
+
+.about-text {
+    line-height: 1.8;
+}
+
+/* ---------- footer ---------- */
+
+footer {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid var(--color-faint);
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 0.9rem;
+}
+
+.footer-item {
+    color: var(--color-muted);
+}
+
+.built-in {
+    width: 100%;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    margin-top: 8px;
+}
+
+.footer-hint {
+    width: 100%;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    opacity: 0.55;
+    margin-top: 4px;
+    cursor: default;
+}
+
+.footer-location {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    cursor: default;
+}
+
+.footer-location::before {
+    content: "> ";
+    color: var(--color-accent);
+}
+
+.footer-location::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(0, 105, 62, 0.55),
+            transparent);
+    transform: skewX(-15deg);
+    pointer-events: none;
+}
+
+.footer-location:hover::after {
+    animation: shine 0.7s ease forwards;
+}
+
+html.dark-mode .footer-location::after {
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(90, 186, 122, 0.45),
+            transparent);
+}
+
+@keyframes shine {
+    0% { left: -60%; }
+    100% { left: 150%; }
+}
+
+/* ---------- terminal (homepage easter egg) ---------- */
+
+#term {
+    display: none;
+    margin: -20px 0 40px;
+    font-size: 0.95rem;
+}
+
+#term.open {
+    display: block;
+}
+
+#term-output {
+    color: var(--color-muted);
+    white-space: pre-wrap;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+#term-output .t-accent {
+    color: var(--color-accent);
+}
+
+.term-line {
+    display: flex;
+}
+
+.term-prompt {
+    color: var(--color-accent);
+    margin-right: 8px;
+}
+
+#term-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: inherit;
+    flex: 1;
+    caret-color: var(--color-accent);
+}
+
+/* ---------- mobile: welcome, not blocked ---------- */
+
+@media (max-width: 680px) {
+    .container {
+        padding: 40px 18px;
+    }
+
+    .site-name {
+        font-size: 2rem;
+    }
+
+    .page-title {
+        font-size: 1.75rem;
+    }
+
+    .board {
+        grid-template-columns: 1fr;
+    }
+
+    .about-row {
+        flex-direction: column;
+    }
+}

@@ -2,298 +2,56 @@
 <html lang="en">
 
 <head>
-    <script>
-        (function () {
-            function applyScheme() {
-                var stored = localStorage.getItem('color-scheme');
-                var osDark = window.matchMedia(
-                    '(prefers-color-scheme: dark)'
-                ).matches;
-                var useDark =
-                    stored === 'dark' ? true
-                        : stored === 'light' ? false
-                            : osDark;
-
-                document.documentElement.classList.toggle('dark-mode', useDark);
-            }
-
-            applyScheme();
-
-            // bfcache fix — re-apply when restored from back/forward cache
-            window.addEventListener('pageshow', function (e) {
-                if (e.persisted) applyScheme();
-            });
-        })();
-    </script>
-    <style>
-        html.dark-mode {
-            --color-bg: #151515;
-            --color-text: #c9d1d9;
-            --color-accent: #5aba7a;
-            --color-muted: #8b949e;
-        }
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faizan</title>
+    <meta name="description" content="Faizan's corner of the internet. Writing, scraps, cool finds. Built in Mathikere.">
     <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+    <script src="assets/theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --color-bg: #EEF7F9;
-            --color-text: #000000;
-            --color-accent: #00693e;
-            --color-muted: #666666;
-        }
-
-        ::selection {
-            background-color: #00693e;
-            color: #fff;
-        }
-
-        ::-moz-selection {
-            background-color: #00693e;
-            color: #fff;
-        }
-
-        body {
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 60px 20px 40px;
-        }
-
-        #mobile-block {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: var(--color-bg);
-            font-family: 'IBM Plex Mono', 'Courier New', monospace;
-            font-size: 14px;
-            z-index: 9999;
-            box-sizing: border-box;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-accent);
-        }
-
-        /* Header */
-        header {
-            margin-bottom: 50px;
-        }
-
-        .site-name {
-            font-size: 2.5rem;
-            font-weight: 400;
-            margin-bottom: 8px;
-            color: var(--color-text);
-        }
-
-        .site-subline {
-            font-size: 0.9rem;
-            color: var(--color-muted);
-            margin-bottom: 20px;
-        }
-
-        .cursor {
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            50% {
-                opacity: 1;
-            }
-
-            51%,
-            100% {
-                opacity: 0;
-            }
-        }
-
-        /* Single column sections */
-        section {
-            margin-bottom: 40px;
-        }
-
-        h2 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 12px;
-            color: var(--color-accent);
-        }
-
-        h2 a {
-            color: inherit;
-        }
-
-        p {
-            color: var(--color-accent);
-            line-height: 1.7;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        li {
-            margin-bottom: 6px;
-            color: var(--color-accent);
-        }
-
-        a {
-            color: var(--color-accent);
-            text-decoration: none;
-            transition: all 0.15s ease;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        a:hover::before {
-            content: '> ';
-        }
-
-        /* Footer */
-        footer {
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            font-size: 0.9rem;
-        }
-
-        .footer-item {
-            color: var(--color-muted);
-        }
-
-        .footer-item a {
-            color: var(--color-accent);
-        }
-
-        .built-in {
-            width: 100%;
-            font-size: 0.8rem;
-            color: #999;
-            margin-top: 8px;
-        }
-
-        .footer-location {
-            position: relative;
-            display: inline-block;
-            overflow: hidden;
-            cursor: default;
-        }
-
-        .footer-location::before {
-            content: "> ";
-            color: var(--color-accent);
-        }
-
-        .footer-location::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg,
-                    transparent,
-                    rgba(0, 105, 62, 0.55),
-                    transparent);
-            transform: skewX(-15deg);
-            pointer-events: none;
-        }
-
-        .footer-location:hover::after {
-            animation: shine 0.7s ease forwards;
-        }
-
-        html.dark-mode .footer-location::after {
-            background: linear-gradient(90deg,
-                    transparent,
-                    rgba(90, 186, 122, 0.45),
-                    transparent);
-        }
-
-        @keyframes shine {
-            0% {
-                left: -60%;
-            }
-
-            100% {
-                left: 150%;
-            }
-        }
-
-        /* Mobile */
-        @media (max-width: 680px) {
-            #mobile-block {
-                display: flex;
-            }
-
-            .container {
-                padding: 40px 20px;
-            }
-
-            .site-name {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
-    <div id="mobile-block">This site is meant to be read on a desktop.</div>
-
     <div class="container">
         <header>
             <h1 class="site-name" id="site-name"><span class="cursor">█</span></h1>
+            <p class="site-subline">a small site. it goes deeper than it looks.</p>
         </header>
 
-        <!-- WRITING Section -->
-        <section>
+        <div id="term">
+            <div id="term-output"></div>
+            <div class="term-line">
+                <span class="term-prompt">~ $</span>
+                <input id="term-input" type="text" autocomplete="off" spellcheck="false" aria-label="terminal input">
+            </div>
+        </div>
+
+        <section class="index-section">
             <h2><a href="writing.html">Writing</a></h2>
+            <p>things I sat down and actually wrote</p>
         </section>
 
-        <!-- WORKBENCH Section -->
-        <section>
-            <h2><a href="#">Workbench</a></h2>
-        </section>
-
-        <!-- SCRAPS Section -->
-        <section>
+        <section class="index-section">
             <h2><a href="scraps.html">Scraps</a></h2>
+            <p>what I'm reading, watching, playing on loop</p>
         </section>
 
-        <!-- About Section -->
-        <section>
+        <section class="index-section">
+            <h2><a href="cool-finds.html">Cool Finds</a></h2>
+            <p>a pasteboard of links, quotes, rabbit holes</p>
+        </section>
+
+        <section class="index-section">
+            <h2><a href="workbench.html">Workbench</a></h2>
+            <p>things being built. sawdust everywhere</p>
+        </section>
+
+        <section class="index-section">
             <h2><a href="about.html">About</a></h2>
+            <p>who runs this place</p>
         </section>
 
         <footer>
@@ -301,6 +59,7 @@
                 <span class="footer-item"><a id="footer-email"
                         href="mailto:faizanxmd@gmail.com">faizanxmd@gmail.com</a></span>
                 <span class="built-in" id="built-in-text"><span class="footer-location">Built in Mathikere</span></span>
+                <span class="footer-hint">psst — this site has a terminal. find it.</span>
             </div>
         </footer>
     </div>
@@ -336,24 +95,7 @@
             setTimeout(animateHeader, 300);
         });
     </script>
-    <script>
-        document.addEventListener('keydown', function (e) {
-            if (e.key === '`') {
-                var current = localStorage.getItem('color-scheme');
-                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (!current) {
-                    localStorage.setItem('color-scheme', prefersDark ? 'light' : 'dark');
-                } else if (current === 'dark') {
-                    localStorage.setItem('color-scheme', 'light');
-                } else {
-                    localStorage.removeItem('color-scheme');
-                }
-                var override = localStorage.getItem('color-scheme');
-                var shouldDark = override === 'dark' || (!override && prefersDark);
-                document.documentElement.classList.toggle('dark-mode', shouldDark);
-            }
-        });
-    </script>
+    <script src="assets/terminal.js" defer></script>
 </body>
 
 </html>

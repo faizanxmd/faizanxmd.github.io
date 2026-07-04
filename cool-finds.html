@@ -2,257 +2,36 @@
 <html lang="en">
 
 <head>
-    <script>
-        (function () {
-            function applyScheme() {
-                var stored = localStorage.getItem('color-scheme');
-                var osDark = window.matchMedia(
-                    '(prefers-color-scheme: dark)'
-                ).matches;
-                var useDark =
-                    stored === 'dark' ? true
-                        : stored === 'light' ? false
-                            : osDark;
-
-                document.documentElement.classList.toggle('dark-mode', useDark);
-            }
-
-            applyScheme();
-
-            // bfcache fix — re-apply when restored from back/forward cache
-            window.addEventListener('pageshow', function (e) {
-                if (e.persisted) applyScheme();
-            });
-        })();
-    </script>
-    <style>
-        html.dark-mode {
-            --color-bg: #151515;
-            --color-text: #c9d1d9;
-            --color-accent: #5aba7a;
-            --color-muted: #8b949e;
-        }
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cool Finds - Faizan</title>
+    <meta name="description" content="A pasteboard of links, quotes, and rabbit holes.">
     <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+    <script src="assets/theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --color-bg: #EEF7F9;
-            --color-text: #000000;
-            --color-accent: #00693e;
-            --color-muted: #666666;
-        }
-
-        ::selection {
-            background-color: #00693e;
-            color: #fff;
-        }
-
-        ::-moz-selection {
-            background-color: #00693e;
-            color: #fff;
-        }
-
-        body {
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            font-family: 'Courier Prime', 'IBM Plex Mono', 'Courier New', monospace;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 60px 20px 40px;
-        }
-
-        #mobile-block {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: var(--color-bg);
-            font-family: 'IBM Plex Mono', 'Courier New', monospace;
-            font-size: 14px;
-            z-index: 9999;
-            box-sizing: border-box;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-accent);
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 30px;
-            color: var(--color-muted);
-            font-size: 0.9rem;
-            text-decoration: none;
-        }
-
-        .back-link:hover {
-            color: var(--color-accent);
-            text-decoration: underline;
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 8px;
-            color: var(--color-text);
-        }
-
-        .tagline {
-            color: var(--color-muted);
-            font-size: 0.95rem;
-            margin-bottom: 40px;
-        }
-
-        .board {
-            display: grid;
-            gap: 14px;
-        }
-
-        .entry {
-            border: 1px solid #e7e7e7;
-            padding: 14px 16px;
-        }
-
-        .entry-text {
-            color: #111;
-            line-height: 1.6;
-            word-break: break-word;
-        }
-
-        .entry-link {
-            color: var(--color-accent);
-            text-decoration: none;
-        }
-
-        .entry-link:hover {
-            text-decoration: underline;
-        }
-
-        .entry-note {
-            margin-top: 6px;
-            color: var(--color-muted);
-            font-size: 0.88rem;
-        }
-
-        .empty {
-            color: #999;
-            font-style: italic;
-            border: 1px dashed #ddd;
-            padding: 14px 16px;
-        }
-
-        footer {
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid #e0e0e0;
-            font-size: 0.9rem;
-            color: var(--color-muted);
-        }
-
-        footer a {
-            color: var(--color-accent);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        .footer-location {
-            position: relative;
-            display: inline-block;
-            overflow: hidden;
-            cursor: default;
-        }
-
-        .footer-location::before {
-            content: "> ";
-            color: var(--color-accent);
-        }
-
-        .footer-location::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg,
-                    transparent,
-                    rgba(0, 105, 62, 0.55),
-                    transparent);
-            transform: skewX(-15deg);
-            pointer-events: none;
-        }
-
-        .footer-location:hover::after {
-            animation: shine 0.7s ease forwards;
-        }
-
-        html.dark-mode .footer-location::after {
-            background: linear-gradient(90deg,
-                    transparent,
-                    rgba(90, 186, 122, 0.45),
-                    transparent);
-        }
-
-        @keyframes shine {
-            0% {
-                left: -60%;
-            }
-
-            100% {
-                left: 150%;
-            }
-        }
-
-        @media (max-width: 680px) {
-            #mobile-block {
-                display: flex;
-            }
-
-            .container {
-                padding: 40px 20px;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
-    <div id="mobile-block">This site is meant to be read on a desktop.</div>
-
     <div class="container">
-        <a href="index.html" class="back-link">← Back</a>
+        <div class="back-link">
+            <a href="index.html">← Back</a>
+        </div>
 
-        <h1 id="board-title">Cool Finds</h1>
-        <p class="tagline" id="board-subtitle">pasteboard</p>
+        <header>
+            <h1 class="page-title" id="board-title">Cool Finds</h1>
+            <p class="page-subline" id="board-subtitle">pasteboard</p>
+        </header>
 
         <div class="board" id="board-entries"></div>
 
         <footer>
-            <a href="mailto:me@faizanxmd.online">me@faizanxmd.online</a>
-            <br><br>
-            <span class="footer-location">Built in Mathikere</span>
+            <div class="footer-content">
+                <span class="footer-item"><a href="mailto:faizanxmd@gmail.com">faizanxmd@gmail.com</a></span>
+                <span class="built-in"><span class="footer-location">Built in Mathikere</span></span>
+            </div>
         </footer>
     </div>
 
@@ -303,24 +82,6 @@
             }
 
             entriesEl.appendChild(card);
-        });
-    </script>
-    <script>
-        document.addEventListener('keydown', function (e) {
-            if (e.key === '`') {
-                var current = localStorage.getItem('color-scheme');
-                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (!current) {
-                    localStorage.setItem('color-scheme', prefersDark ? 'light' : 'dark');
-                } else if (current === 'dark') {
-                    localStorage.setItem('color-scheme', 'light');
-                } else {
-                    localStorage.removeItem('color-scheme');
-                }
-                var override = localStorage.getItem('color-scheme');
-                var shouldDark = override === 'dark' || (!override && prefersDark);
-                document.documentElement.classList.toggle('dark-mode', shouldDark);
-            }
         });
     </script>
 </body>
