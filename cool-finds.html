@@ -16,21 +16,20 @@
 
 <body>
     <div class="container">
-        <div class="back-link">
-            <a href="index.html">← Back</a>
-        </div>
-
         <header>
+            <a class="back-link" href="index.html">← back</a>
             <h1 class="page-title" id="board-title">Cool Finds</h1>
-            <p class="page-subline" id="board-subtitle">pasteboard</p>
+            <p class="sr-only" id="board-subtitle"></p>
         </header>
 
-        <div class="board" id="board-entries"></div>
+        <main>
+            <div class="board" id="board-entries"></div>
+        </main>
 
         <footer>
             <div class="footer-content">
-                <span class="footer-item"><a href="mailto:faizanxmd@gmail.com">faizanxmd@gmail.com</a></span>
-                <span class="built-in"><span class="footer-location">Built in Mathikere</span></span>
+                <a class="footer-email" id="footer-email" href="mailto:faizanxmd@gmail.com">faizanxmd@gmail.com</a>
+                <span class="built-in" id="built-in-text"><span class="footer-location">Built in Mathikere</span></span>
             </div>
         </footer>
     </div>

@@ -14,52 +14,50 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
 
-<body>
+<body class="home">
     <div class="container">
         <header>
             <h1 class="site-name" id="site-name"><span class="cursor">█</span></h1>
-            <p class="site-subline">a small site. it goes deeper than it looks.</p>
         </header>
 
-        <div id="term">
-            <div id="term-output"></div>
-            <div class="term-line">
-                <span class="term-prompt">~ $</span>
-                <input id="term-input" type="text" autocomplete="off" spellcheck="false" aria-label="terminal input">
+        <main class="home-main">
+            <div id="term">
+                <div id="term-output"></div>
+                <div class="term-line">
+                    <span class="term-prompt">~ $</span>
+                    <input id="term-input" type="text" autocomplete="off" spellcheck="false" aria-label="terminal input">
+                </div>
             </div>
-        </div>
 
-        <section class="index-section">
-            <h2><a href="writing.html">Writing</a></h2>
-            <p>things I sat down and actually wrote</p>
-        </section>
+            <nav class="home-nav" aria-label="Main">
+                <section class="index-section">
+                    <h2><a href="writing.html">Writing</a></h2>
+                </section>
 
-        <section class="index-section">
-            <h2><a href="scraps.html">Scraps</a></h2>
-            <p>what I'm reading, watching, playing on loop</p>
-        </section>
+                <section class="index-section">
+                    <h2><a href="scraps.html">Scraps</a></h2>
+                </section>
 
-        <section class="index-section">
-            <h2><a href="cool-finds.html">Cool Finds</a></h2>
-            <p>a pasteboard of links, quotes, rabbit holes</p>
-        </section>
+                <section class="index-section">
+                    <h2><a href="cool-finds.html">Cool Finds</a></h2>
+                </section>
 
-        <section class="index-section">
-            <h2><a href="workbench.html">Workbench</a></h2>
-            <p>things being built. sawdust everywhere</p>
-        </section>
+                <section class="index-section">
+                    <h2><a href="workbench.html">Workbench</a></h2>
+                </section>
 
-        <section class="index-section">
-            <h2><a href="about.html">About</a></h2>
-            <p>who runs this place</p>
-        </section>
+                <section class="index-section">
+                    <h2><a href="about.html">About</a></h2>
+                </section>
+            </nav>
+
+            <p class="terminal-hint sr-only">psst — this site has a terminal. find it.</p>
+        </main>
 
         <footer>
             <div class="footer-content">
-                <span class="footer-item"><a id="footer-email"
-                        href="mailto:faizanxmd@gmail.com">faizanxmd@gmail.com</a></span>
+                <a class="footer-email" id="footer-email" href="mailto:faizanxmd@gmail.com">faizanxmd@gmail.com</a>
                 <span class="built-in" id="built-in-text"><span class="footer-location">Built in Mathikere</span></span>
-                <span class="footer-hint">psst — this site has a terminal. find it.</span>
             </div>
         </footer>
     </div>
