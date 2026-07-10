@@ -54,4 +54,10 @@ const SCRAPS = [
     style: ["music"],
     layout: "right",
   },
+  {
+    tag: "music",
+    title: "no surprises",
+    style: ["music"],
+    layout: "center",
+  },
 ];
