@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraps Editor</title>
+    <meta name="description" content="Local editor for the scraps page.">
+    <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+    <script src="assets/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        /* ── Editor-only styling. This page is a local tool, so it has its own
+              simple chrome on top of the shared site styles. ── */
+        .editor-wrap { max-width: 720px; margin: 0 auto; padding: var(--space-6) var(--space-4) var(--space-8); }
+        .editor-wrap h1 { margin: var(--space-4) 0 var(--space-7); }
+        .editor-wrap h2 { margin: 0 0 var(--space-5); }
+
+        .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: var(--space-4); }
+        .field label { font-size: 0.8rem; color: var(--color-muted); text-transform: lowercase; letter-spacing: 0.04em; }
+        .field input, .field select {
+            font-family: inherit; font-size: 0.95rem; padding: 8px 10px;
+            background: var(--color-surface); color: var(--color-text);
+            border: 1px solid var(--color-hairline); border-radius: 3px;
+        }
+        .field input:focus, .field select:focus { outline: none; border-color: var(--color-accent); }
+
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+
+        .checks { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-bottom: var(--space-4); }
+        .checks label { display: inline-flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--color-text); text-transform: none; }
+
+        /* Collapsible "more options" section (native <details>). */
+        .more { margin: 0 0 var(--space-5); }
+        .more > summary { cursor: pointer; color: var(--color-muted); font-size: 0.85rem; list-style: none; padding: 4px 0; }
+        .more > summary::-webkit-details-marker { display: none; }
+        .more > summary::before { content: "▸  "; }
+        .more[open] > summary::before { content: "▾  "; }
+        .more-body { padding-top: var(--space-4); }
+
+        .btn {
+            font-family: inherit; font-size: 0.9rem; cursor: pointer;
+            padding: 8px 16px; border-radius: 3px;
+            border: 1px solid var(--color-accent); background: var(--color-accent); color: #fff;
+        }
+        .btn:hover { opacity: 0.9; }
+        .btn-secondary { background: transparent; color: var(--color-text); border-color: var(--color-hairline); }
+        .btn-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: var(--space-4); }
+
+        .divider { border: none; border-top: 1px solid var(--color-hairline); margin: var(--space-8) 0; }
+
+        .list-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 14px; border: 1px solid var(--color-hairline);
+            border-radius: 3px; margin-bottom: 10px; background: var(--color-surface);
+        }
+        .list-row .grab { color: var(--color-muted); font-size: 0.8rem; min-width: 22px; }
+        .list-row .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .list-row .mini-tag { color: var(--color-muted); font-size: 0.75rem; }
+        .icon-btn {
+            font-family: inherit; cursor: pointer; background: transparent;
+            border: 1px solid var(--color-hairline); border-radius: 3px;
+            color: var(--color-text); padding: 3px 8px; font-size: 0.8rem;
+        }
+        .icon-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+        .save-note { font-size: 0.8rem; color: var(--color-muted); margin-top: var(--space-3); line-height: 1.6; }
+        .preview-frame { margin-top: var(--space-4); padding: var(--space-4); border: 1px dashed var(--color-hairline); border-radius: 4px; }
+        .status { font-size: 0.85rem; color: var(--color-accent); min-height: 1.2em; margin-top: 8px; }
+
+        @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+    </style>
+</head>
+
+<body>
+    <div class="editor-wrap">
+        <a class="back-link" href="scraps.html">← back to scraps</a>
+        <h1 class="page-title">Scraps Editor</h1>
+
+        <!-- ── THE FORM: the everyday fields ── -->
+        <div class="field">
+            <label for="f-title">title</label>
+            <input id="f-title" type="text">
+        </div>
+
+        <div class="two-col">
+            <div class="field">
+                <label for="f-tag">tag</label>
+                <input id="f-tag" type="text">
+            </div>
+            <div class="field">
+                <label for="f-link">link</label>
+                <input id="f-link" type="text" placeholder="https://…">
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="f-note">note</label>
+            <input id="f-note" type="text">
+        </div>
+
+        <!-- ── The rarer options, tucked away until you need them ── -->
+        <details class="more">
+            <summary>more options — style, layout, secondary link</summary>
+            <div class="more-body">
+                <div class="field">
+                    <label>style</label>
+                    <div class="checks" id="style-checks"><!-- checkboxes injected by JS --></div>
+                </div>
+
+                <div class="field">
+                    <label for="f-layout">layout</label>
+                    <select id="f-layout">
+                        <option value="">normal</option>
+                        <option value="center">wide — centered</option>
+                        <option value="right">wide — hugs the right</option>
+                    </select>
+                </div>
+
+                <div class="two-col">
+                    <div class="field">
+                        <label for="f-ghost-text">secondary link text</label>
+                        <input id="f-ghost-text" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="f-ghost-link">secondary link url</label>
+                        <input id="f-ghost-link" type="text" placeholder="https://…">
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <div class="btn-row">
+            <button class="btn" id="submit-btn" type="button">+ Add scrap</button>
+            <button class="btn btn-secondary" id="cancel-btn" type="button" style="display:none;">cancel</button>
+        </div>
+
+        <hr class="divider">
+
+        <!-- ── THE CURRENT LIST: reorder / edit / delete ── -->
+        <h2 class="page-title" style="font-size:1.1rem;">your scraps <span id="count" class="mini-tag"></span></h2>
+        <div id="list"></div>
+
+        <div class="btn-row">
+            <button class="btn" id="save-btn" type="button">Save to scraps-data.js</button>
+        </div>
+        <div class="status" id="status"></div>
+
+        <!-- ── LIVE PREVIEW: the real cards, built with the same code as the site ── -->
+        <hr class="divider">
+        <h2 class="page-title" style="font-size:1.1rem;">live preview</h2>
+        <div class="preview-frame">
+            <div class="scraps-desk" id="editor-preview"></div>
+        </div>
+    </div>
+
+    <!-- Reuse the site's own data + renderer. scraps.js's auto-render harmlessly
+         no-ops here because there's no #scraps-desk; we call buildScrap ourselves. -->
+    <script src="assets/scraps-data.js"></script>
+    <script src="assets/scraps.js"></script>
+    <script>
+        // The looks a scrap can have (checkbox list) and the file header we keep.
+        const STYLE_OPTIONS = ["tape", "music", "quote", "thought", "dashed", "tall", "sm"];
+        const FILE_HEADER =
+`// ─────────────────────────────────────────────────────────────────────────
+// YOUR SCRAPS — the data. (This file is generated/edited by editor.html.)
+// Each scrap is one { ... } record. scraps.js reads this list and builds the
+// cards. To add one: use editor.html, or copy a block and change the words.
+// ─────────────────────────────────────────────────────────────────────────`;
+
+        // Working copy of the data (a deep copy so we don't mutate the original).
+        let items = JSON.parse(JSON.stringify(SCRAPS));
+        let editingIndex = null; // null means "adding new"; a number means "editing that one"
+
+        // Grab the form fields once.
+        const el = (id) => document.getElementById(id);
+        const fTitle = el("f-title"), fTag = el("f-tag"), fLink = el("f-link"),
+              fNote = el("f-note"), fGhostText = el("f-ghost-text"),
+              fGhostLink = el("f-ghost-link"), fLayout = el("f-layout");
+
+        // Build the style checkboxes.
+        STYLE_OPTIONS.forEach(function (name) {
+            const label = document.createElement("label");
+            const box = document.createElement("input");
+            box.type = "checkbox"; box.value = name; box.dataset.style = name;
+            label.appendChild(box);
+            label.appendChild(document.createTextNode(name));
+            el("style-checks").appendChild(label);
+        });
+
+        // Read the form into a scrap object.
+        function readForm() {
+            const scrap = {
+                tag: fTag.value.trim(),
+                title: fTitle.value.trim(),
+            };
+            if (fLink.value.trim()) scrap.link = fLink.value.trim();
+            if (fNote.value.trim()) scrap.note = fNote.value.trim();
+            if (fGhostText.value.trim()) {
+                scrap.ghost = { text: fGhostText.value.trim(), link: fGhostLink.value.trim() };
+            }
+            scrap.style = STYLE_OPTIONS.filter(function (name) {
+                return el("style-checks").querySelector('[data-style="' + name + '"]').checked;
+            });
+            if (fLayout.value) scrap.layout = fLayout.value;
+            return scrap;
+        }
+
+        // Put a scrap into the form (for editing), or clear it (pass nothing).
+        function writeForm(scrap) {
+            scrap = scrap || {};
+            fTitle.value = scrap.title || "";
+            fTag.value = scrap.tag || "";
+            fLink.value = scrap.link || "";
+            fNote.value = scrap.note || "";
+            fGhostText.value = scrap.ghost ? scrap.ghost.text : "";
+            fGhostLink.value = scrap.ghost ? scrap.ghost.link : "";
+            fLayout.value = scrap.layout || "";
+            STYLE_OPTIONS.forEach(function (name) {
+                el("style-checks").querySelector('[data-style="' + name + '"]').checked =
+                    (scrap.style || []).indexOf(name) !== -1;
+            });
+        }
+
+        function resetForm() {
+            editingIndex = null;
+            writeForm(null);
+            el("submit-btn").textContent = "+ Add scrap";
+            el("cancel-btn").style.display = "none";
+        }
+
+        // Add (or, when editing, update) a scrap.
+        el("submit-btn").addEventListener("click", function () {
+            const scrap = readForm();
+            if (!scrap.title) { setStatus("A title is required."); return; }
+            if (editingIndex === null) items.push(scrap);
+            else items[editingIndex] = scrap;
+            resetForm();
+            renderAll();
+            setStatus("Saved to the list. Don't forget to press “Save to scraps-data.js”.");
+        });
+
+        el("cancel-btn").addEventListener("click", resetForm);
+
+        // Load a scrap back into the form to edit it.
+        function editItem(i) {
+            editingIndex = i;
+            writeForm(items[i]);
+            el("submit-btn").textContent = "Save changes";
+            el("cancel-btn").style.display = "inline-block";
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function deleteItem(i) {
+            if (!confirm("Delete “" + items[i].title + "”?")) return;
+            items.splice(i, 1);
+            if (editingIndex === i) resetForm();
+            renderAll();
+        }
+
+        function moveItem(i, dir) {
+            const j = i + dir;
+            if (j < 0 || j >= items.length) return;
+            const tmp = items[i]; items[i] = items[j]; items[j] = tmp;
+            renderAll();
+        }
+
+        // Draw the editable list of rows.
+        function renderList() {
+            const list = el("list");
+            list.innerHTML = "";
+            el("count").textContent = "(" + items.length + ")";
+            items.forEach(function (scrap, i) {
+                const row = document.createElement("div");
+                row.className = "list-row";
+                row.innerHTML =
+                    '<span class="grab">' + (i + 1) + '.</span>' +
+                    '<span class="name"></span>' +
+                    '<span class="mini-tag"></span>';
+                row.querySelector(".name").textContent = scrap.title;
+                row.querySelector(".mini-tag").textContent = scrap.tag || "";
+
+                [["↑", function () { moveItem(i, -1); }],
+                 ["↓", function () { moveItem(i, 1); }],
+                 ["edit", function () { editItem(i); }],
+                 ["✕", function () { deleteItem(i); }]].forEach(function (pair) {
+                    const b = document.createElement("button");
+                    b.className = "icon-btn";
+                    b.textContent = pair[0];
+                    b.addEventListener("click", pair[1]);
+                    row.appendChild(b);
+                });
+                list.appendChild(row);
+            });
+        }
+
+        // Draw the real card preview using the SITE'S OWN buildScrap function.
+        function renderPreview() {
+            const desk = el("editor-preview");
+            desk.innerHTML = "";
+            items.forEach(function (scrap, i) {
+                desk.appendChild(buildScrap(scrap, i));
+            });
+        }
+
+        function renderAll() { renderList(); renderPreview(); }
+
+        function setStatus(msg) { el("status").textContent = msg; }
+
+        // Turn the working list back into the text of scraps-data.js.
+        function serialize() {
+            const blocks = items.map(function (s) {
+                const lines = ["  {"];
+                lines.push("    tag: " + JSON.stringify(s.tag || "") + ",");
+                lines.push("    title: " + JSON.stringify(s.title) + ",");
+                if (s.link) lines.push("    link: " + JSON.stringify(s.link) + ",");
+                if (s.note) lines.push("    note: " + JSON.stringify(s.note) + ",");
+                if (s.ghost && s.ghost.text) {
+                    lines.push("    ghost: { text: " + JSON.stringify(s.ghost.text) +
+                               ", link: " + JSON.stringify(s.ghost.link || "") + " },");
+                }
+                lines.push("    style: " + JSON.stringify(s.style || []) + ",");
+                if (s.layout) lines.push("    layout: " + JSON.stringify(s.layout) + ",");
+                lines.push("  },");
+                return lines.join("\n");
+            });
+            return FILE_HEADER + "\n\nconst SCRAPS = [\n" + blocks.join("\n") + "\n];\n";
+        }
+
+        // Save: write straight to the file (Chrome/Edge) or download it.
+        el("save-btn").addEventListener("click", async function () {
+            const text = serialize();
+            try {
+                if (window.showSaveFilePicker) {
+                    const handle = await window.showSaveFilePicker({
+                        // `id` makes the browser remember the folder you chose
+                        // last time, so after you save into assets/ once, it
+                        // defaults there from then on.
+                        id: "scrapsDataFile",
+                        suggestedName: "scraps-data.js",
+                        types: [{ description: "JavaScript", accept: { "text/javascript": [".js"] } }],
+                    });
+                    const writable = await handle.createWritable();
+                    await writable.write(text);
+                    await writable.close();
+                    setStatus("Saved! Reload scraps.html to see it. Then publish to go live.");
+                } else {
+                    const blob = new Blob([text], { type: "text/javascript" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url; a.download = "scraps-data.js"; a.click();
+                    URL.revokeObjectURL(url);
+                    setStatus("Downloaded. Move it into your assets/ folder, replacing the old file.");
+                }
+            } catch (err) {
+                if (err && err.name === "AbortError") return; // user closed the picker
+                setStatus("Couldn't save: " + err);
+            }
+        });
+
+        // First paint.
+        renderAll();
+    </script>
+</body>
+
+</html>
