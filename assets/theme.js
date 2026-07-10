@@ -1,5 +1,3 @@
-// theme.js — load this in <head> WITHOUT defer so the
-// dark-mode class lands before first paint (no flash).
 (function () {
     function applyScheme() {
         var stored = localStorage.getItem('color-scheme');
@@ -13,12 +11,10 @@
 
     applyScheme();
 
-    // bfcache fix — re-apply when restored from back/forward cache
     window.addEventListener('pageshow', function (e) {
         if (e.persisted) applyScheme();
     });
 
-    // backtick toggles the scheme: os-default -> opposite -> back
     document.addEventListener('keydown', function (e) {
         if (e.key !== '`') return;
         if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scraps - Faizan</title>
-    <meta name="description" content="What Faizan is reading, following, and playing on loop.">
+    <meta name="description" content="A messy pile of half-baked thoughts, cool finds, and heavy rotation. Intentionally unordered.">
     <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
     <script src="assets/theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,52 +14,75 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
 
-<body>
+<body class="scraps-page">
     <div class="container">
-        <header>
+        <header class="scraps-header">
             <a class="back-link" href="index.html">← back</a>
-            <h1 class="page-title">Scraps</h1>
+            <h1 class="page-title scraps-title">
+                <span class="scraps-title-main">Scraps</span>
+                <span class="scraps-title-xout" aria-hidden="true">organized</span>
+            </h1>
+            <p class="scraps-lede">the messy drawer. half-baked, found, unfinished — no filing system.</p>
         </header>
 
         <main>
-            <section>
-                <h2>Reading</h2>
-                <ul>
-                    <li><a href="https://beej.us/guide/bgc/">Beej's Guide to C</a>
-                        <span class="note">still the clearest C guide on the internet</span>
-                    </li>
-                    <li><a href="https://en.wikipedia.org/wiki/The_Stand">The Stand</a>
-                        <span class="note">stephen king, the long one</span>
-                    </li>
-                    <li><a href="https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind">Sapiens</a>
-                        <span class="note">everyone said to read it. everyone was right</span>
-                    </li>
-                </ul>
-            </section>
+            <div class="scraps-desk">
+                <article class="scrap scrap--tape">
+                    <span class="scrap-tag">reading</span>
+                    <a class="scrap-title" href="https://beej.us/guide/bgc/">Beej's Guide to C</a>
+                    <p class="scrap-note">still the clearest C guide on the internet</p>
+                </article>
 
-            <section>
-                <h2>Signal</h2>
-                <ul>
-                    <li><a href="https://grahamduncan.blog/whats-going-on-here/">What's Going On Here? (Graham Duncan)</a>
-                        <span class="note">on reading people. worth rereading yearly</span>
-                    </li>
-                    <li><a href="https://robinhome.vercel.app/">Lil Mo</a></li>
-                </ul>
-            </section>
+                <article class="scrap scrap--music">
+                    <span class="scrap-tag">♪</span>
+                    <a class="scrap-title" href="https://youtu.be/1lyu1KKwC74">Bitter Sweet Symphony</a>
+                </article>
 
-            <section>
-                <h2>Heavy Rotation</h2>
-                <ul>
-                    <li><a href="https://youtu.be/1lyu1KKwC74">Bitter Sweet Symphony</a></li>
-                    <li><a href="https://youtube.com/playlist?list=PLL-NbN8uTOigsPnqWhPLWJ4ADAkmNbrQI">Rubber Soul (Album)</a>
-                        <span class="note">the beatles, 1965. no skips</span>
-                    </li>
-                    <li><a href="https://www.youtube.com/watch?v=TRJ_s2G76Hg">Far From Any Road</a>
-                        <span class="note">the true detective song, yes</span>
-                    </li>
-                    <li><a href="https://www.youtube.com/watch?v=McvdQYzlLM8">ants in my room</a></li>
-                </ul>
-            </section>
+                <article class="scrap scrap--tall">
+                    <span class="scrap-tag">signal</span>
+                    <a class="scrap-title" href="https://grahamduncan.blog/whats-going-on-here/">What's Going On Here?</a>
+                    <p class="scrap-note">graham duncan — on reading people. worth rereading yearly</p>
+                </article>
+
+                <article class="scrap scrap--quote">
+                    <p class="scrap-title">The Stand</p>
+                    <p class="scrap-note">stephen king, the long one. still in it.</p>
+                    <a class="scrap-ghost-link" href="https://en.wikipedia.org/wiki/The_Stand">wiki →</a>
+                </article>
+
+                <article class="scrap scrap--music scrap--tape">
+                    <span class="scrap-tag">heavy rotation</span>
+                    <a class="scrap-title" href="https://youtube.com/playlist?list=PLL-NbN8uTOigsPnqWhPLWJ4ADAkmNbrQI">Rubber Soul</a>
+                    <p class="scrap-note">the beatles, 1965. no skips</p>
+                </article>
+
+                <article class="scrap">
+                    <span class="scrap-tag">?</span>
+                    <a class="scrap-title" href="https://robinhome.vercel.app/">Lil Mo</a>
+                </article>
+
+                <article class="scrap scrap--thought scrap--dashed">
+                    <span class="scrap-tag">half-baked</span>
+                    <p class="scrap-title">something about cities that never sleep and code that never ships</p>
+                    <p class="scrap-note">not ready. leave it here so it doesn't vanish.</p>
+                </article>
+
+                <article class="scrap scrap--music">
+                    <span class="scrap-tag">♪</span>
+                    <a class="scrap-title" href="https://www.youtube.com/watch?v=TRJ_s2G76Hg">Far From Any Road</a>
+                    <p class="scrap-note">the true detective song, yes</p>
+                </article>
+
+                <article class="scrap scrap--tape">
+                    <span class="scrap-tag">reading</span>
+                    <a class="scrap-title" href="https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind">Sapiens</a>
+                    <p class="scrap-note">everyone said to read it. everyone was right</p>
+                </article>
+
+                <article class="scrap scrap--music scrap--sm">
+                    <a class="scrap-title" href="https://www.youtube.com/watch?v=McvdQYzlLM8">ants in my room</a>
+                </article>
+            </div>
         </main>
 
         <footer>

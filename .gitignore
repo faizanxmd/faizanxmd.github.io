@@ -1,1 +1,3 @@
 .vercel
+tools/orchestrator/tasks/
+.DS_Store

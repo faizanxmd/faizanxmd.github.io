@@ -1,0 +1,50 @@
+{
+  "title": "CompletionReport.v1",
+  "type": "object",
+  "required": [
+    "task_id",
+    "round",
+    "status",
+    "summary",
+    "changed_files",
+    "commands_run",
+    "blockers",
+    "assumptions",
+    "questions",
+    "scope_deviations"
+  ],
+  "properties": {
+    "task_id": { "type": "string" },
+    "round": { "type": "integer" },
+    "status": { "type": "string", "enum": ["completed", "partial", "blocked"] },
+    "summary": { "type": "string" },
+    "changed_files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "change"],
+        "properties": {
+          "path": { "type": "string" },
+          "change": { "type": "string" }
+        }
+      }
+    },
+    "commands_run": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["command", "exit_code"],
+        "properties": {
+          "command": { "type": "string" },
+          "exit_code": { "type": "integer" },
+          "output_tail": { "type": "string" }
+        }
+      }
+    },
+    "test_results": { "type": "string" },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "questions": { "type": "array", "items": { "type": "string" } },
+    "scope_deviations": { "type": "array", "items": { "type": "string" } }
+  }
+}
