@@ -30,16 +30,8 @@
 
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
 
-        .checks { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-bottom: var(--space-4); }
-        .checks label { display: inline-flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--color-text); text-transform: none; }
-
-        /* Collapsible "more options" section (native <details>). */
-        .more { margin: 0 0 var(--space-5); }
-        .more > summary { cursor: pointer; color: var(--color-muted); font-size: 0.85rem; list-style: none; padding: 4px 0; }
-        .more > summary::-webkit-details-marker { display: none; }
-        .more > summary::before { content: "▸  "; }
-        .more[open] > summary::before { content: "▾  "; }
-        .more-body { padding-top: var(--space-4); }
+        .field .hint { opacity: 0.7; letter-spacing: 0; }
+        .btn-tiny { align-self: flex-start; margin-top: 6px; padding: 3px 10px; font-size: 0.75rem; }
 
         .btn {
             font-family: inherit; font-size: 0.9rem; cursor: pointer;
@@ -88,50 +80,28 @@
 
         <div class="two-col">
             <div class="field">
-                <label for="f-tag">tag</label>
-                <input id="f-tag" type="text">
+                <label for="f-kind">kind</label>
+                <select id="f-kind"><!-- options injected from KINDS in scraps.js --></select>
             </div>
             <div class="field">
-                <label for="f-link">link</label>
-                <input id="f-link" type="text" placeholder="https://…">
+                <!-- Deliberately a text input, not type="date"/"month": the native
+                     pickers force a complete date and can't express "month only" or
+                     "don't know", which is the whole point of the schema. -->
+                <label for="f-date">date <span class="hint">day · month · or blank</span></label>
+                <input id="f-date" type="text" placeholder="2026-07-30 · 2026-07 · blank">
+                <button class="btn btn-secondary btn-tiny" id="today-btn" type="button">today</button>
             </div>
         </div>
 
         <div class="field">
-            <label for="f-note">note</label>
-            <input id="f-note" type="text">
+            <label for="f-link">link</label>
+            <input id="f-link" type="text" placeholder="https://…">
         </div>
 
-        <!-- ── The rarer options, tucked away until you need them ── -->
-        <details class="more">
-            <summary>more options — style, layout, secondary link</summary>
-            <div class="more-body">
-                <div class="field">
-                    <label>style</label>
-                    <div class="checks" id="style-checks"><!-- checkboxes injected by JS --></div>
-                </div>
-
-                <div class="field">
-                    <label for="f-layout">layout</label>
-                    <select id="f-layout">
-                        <option value="">normal</option>
-                        <option value="center">wide — centered</option>
-                        <option value="right">wide — hugs the right</option>
-                    </select>
-                </div>
-
-                <div class="two-col">
-                    <div class="field">
-                        <label for="f-ghost-text">secondary link text</label>
-                        <input id="f-ghost-text" type="text">
-                    </div>
-                    <div class="field">
-                        <label for="f-ghost-link">secondary link url</label>
-                        <input id="f-ghost-link" type="text" placeholder="https://…">
-                    </div>
-                </div>
-            </div>
-        </details>
+        <div class="field">
+            <label for="f-note">note <span class="hint">your words — leave blank rather than pad it</span></label>
+            <input id="f-note" type="text">
+        </div>
 
         <div class="btn-row">
             <button class="btn" id="submit-btn" type="button">+ Add scrap</button>
@@ -153,22 +123,33 @@
         <hr class="divider">
         <h2 class="page-title" style="font-size:1.1rem;">live preview</h2>
         <div class="preview-frame">
-            <div class="scraps-desk" id="editor-preview"></div>
+            <div class="scraps-log" id="editor-preview"></div>
         </div>
     </div>
 
-    <!-- Reuse the site's own data + renderer. scraps.js's auto-render harmlessly
-         no-ops here because there's no #scraps-desk; we call buildScrap ourselves. -->
+    <!-- Reuse the site's own data + renderer. scraps.js's initScraps() harmlessly
+         no-ops here because there's no #scraps-log (so its keyboard filter is never
+         bound either); we call renderLogInto ourselves. -->
     <script src="assets/scraps-data.js"></script>
     <script src="assets/scraps.js"></script>
     <script>
-        // The looks a scrap can have (checkbox list) and the file header we keep.
-        const STYLE_OPTIONS = ["tape", "music", "quote", "thought", "dashed", "tall", "sm"];
+        // "2026-07-30", or "2026-07", or empty. Nothing else is accepted.
+        const DATE_RE = /^(\d{4}-\d{2}(-\d{2})?)?$/;
+
         const FILE_HEADER =
 `// ─────────────────────────────────────────────────────────────────────────
-// YOUR SCRAPS — the data. (This file is generated/edited by editor.html.)
-// Each scrap is one { ... } record. scraps.js reads this list and builds the
-// cards. To add one: use editor.html, or copy a block and change the words.
+// SCRAPS — the log. One record per thing.
+//
+//   date   OPTIONAL. "2026-07-30" if you know the day. "2026-07" if you only
+//          know the month. LEAVE THE KEY OUT if you don't know at all — the
+//          page prints "--" and says nothing it can't back up. Never guess.
+//   kind   REQUIRED. listen | read | watch | signal | note
+//   title  REQUIRED.
+//   link   optional. the thing itself.
+//   note   optional. your own words. leave it out rather than pad it —
+//          an empty note is the page's default, not a gap.
+//
+// (This file can also be edited by editor.html — the > in the footer.)
 // ─────────────────────────────────────────────────────────────────────────`;
 
         // Working copy of the data (a deep copy so we don't mutate the original).
@@ -177,35 +158,38 @@
 
         // Grab the form fields once.
         const el = (id) => document.getElementById(id);
-        const fTitle = el("f-title"), fTag = el("f-tag"), fLink = el("f-link"),
-              fNote = el("f-note"), fGhostText = el("f-ghost-text"),
-              fGhostLink = el("f-ghost-link"), fLayout = el("f-layout");
+        const fTitle = el("f-title"), fKind = el("f-kind"), fDate = el("f-date"),
+              fLink = el("f-link"), fNote = el("f-note");
 
-        // Build the style checkboxes.
-        STYLE_OPTIONS.forEach(function (name) {
-            const label = document.createElement("label");
-            const box = document.createElement("input");
-            box.type = "checkbox"; box.value = name; box.dataset.style = name;
-            label.appendChild(box);
-            label.appendChild(document.createTextNode(name));
-            el("style-checks").appendChild(label);
+        // Build the kind dropdown from KINDS in scraps.js, so the vocabulary
+        // here can never drift from the one the site actually renders.
+        KINDS.forEach(function (k) {
+            const option = document.createElement("option");
+            option.value = k.key;
+            option.textContent = k.key;
+            fKind.appendChild(option);
+        });
+
+        // Build today's date from local parts. toISOString() would be UTC, which
+        // writes yesterday's date for anyone in IST before 05:30.
+        el("today-btn").addEventListener("click", function () {
+            const now = new Date();
+            const pad = (n) => String(n).padStart(2, "0");
+            fDate.value = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
         });
 
         // Read the form into a scrap object.
         function readForm() {
             const scrap = {
-                tag: fTag.value.trim(),
+                kind: fKind.value,
                 title: fTitle.value.trim(),
             };
+            // An unknown date is written by leaving the key out entirely —
+            // never as "" or null. Absence is the encoding.
+            const date = fDate.value.trim();
+            if (date) scrap.date = date;
             if (fLink.value.trim()) scrap.link = fLink.value.trim();
             if (fNote.value.trim()) scrap.note = fNote.value.trim();
-            if (fGhostText.value.trim()) {
-                scrap.ghost = { text: fGhostText.value.trim(), link: fGhostLink.value.trim() };
-            }
-            scrap.style = STYLE_OPTIONS.filter(function (name) {
-                return el("style-checks").querySelector('[data-style="' + name + '"]').checked;
-            });
-            if (fLayout.value) scrap.layout = fLayout.value;
             return scrap;
         }
 
@@ -213,16 +197,10 @@
         function writeForm(scrap) {
             scrap = scrap || {};
             fTitle.value = scrap.title || "";
-            fTag.value = scrap.tag || "";
+            fKind.value = scrap.kind || KINDS[0].key;
+            fDate.value = scrap.date || "";
             fLink.value = scrap.link || "";
             fNote.value = scrap.note || "";
-            fGhostText.value = scrap.ghost ? scrap.ghost.text : "";
-            fGhostLink.value = scrap.ghost ? scrap.ghost.link : "";
-            fLayout.value = scrap.layout || "";
-            STYLE_OPTIONS.forEach(function (name) {
-                el("style-checks").querySelector('[data-style="' + name + '"]').checked =
-                    (scrap.style || []).indexOf(name) !== -1;
-            });
         }
 
         function resetForm() {
@@ -236,6 +214,10 @@
         el("submit-btn").addEventListener("click", function () {
             const scrap = readForm();
             if (!scrap.title) { setStatus("A title is required."); return; }
+            if (!DATE_RE.test(fDate.value.trim())) {
+                setStatus("Date must be 2026-07-30, or 2026-07, or blank.");
+                return;
+            }
             if (editingIndex === null) items.push(scrap);
             else items[editingIndex] = scrap;
             resetForm();
@@ -279,9 +261,11 @@
                 row.innerHTML =
                     '<span class="grab">' + (i + 1) + '.</span>' +
                     '<span class="name"></span>' +
-                    '<span class="mini-tag"></span>';
+                    '<span class="mini-tag"></span>' +
+                    '<span class="mini-tag mini-date"></span>';
                 row.querySelector(".name").textContent = scrap.title;
-                row.querySelector(".mini-tag").textContent = scrap.tag || "";
+                row.querySelector(".mini-tag").textContent = scrap.kind || "";
+                row.querySelector(".mini-date").textContent = scrap.date || "undated";
 
                 [["↑", function () { moveItem(i, -1); }],
                  ["↓", function () { moveItem(i, 1); }],
@@ -297,13 +281,11 @@
             });
         }
 
-        // Draw the real card preview using the SITE'S OWN buildScrap function.
+        // Preview with the SITE'S OWN renderer, so what you see here is the real
+        // page: sorted newest-first, grouped by month, repeated days suppressed.
+        // (Which is why the ↑/↓ buttons only break ties between equal dates.)
         function renderPreview() {
-            const desk = el("editor-preview");
-            desk.innerHTML = "";
-            items.forEach(function (scrap, i) {
-                desk.appendChild(buildScrap(scrap, i));
-            });
+            renderLogInto(el("editor-preview"), items, null);
         }
 
         function renderAll() { renderList(); renderPreview(); }
@@ -313,18 +295,14 @@
         // Turn the working list back into the text of scraps-data.js.
         function serialize() {
             const blocks = items.map(function (s) {
-                const lines = ["  {"];
-                lines.push("    tag: " + JSON.stringify(s.tag || "") + ",");
-                lines.push("    title: " + JSON.stringify(s.title) + ",");
-                if (s.link) lines.push("    link: " + JSON.stringify(s.link) + ",");
-                if (s.note) lines.push("    note: " + JSON.stringify(s.note) + ",");
-                if (s.ghost && s.ghost.text) {
-                    lines.push("    ghost: { text: " + JSON.stringify(s.ghost.text) +
-                               ", link: " + JSON.stringify(s.ghost.link || "") + " },");
-                }
-                lines.push("    style: " + JSON.stringify(s.style || []) + ",");
-                if (s.layout) lines.push("    layout: " + JSON.stringify(s.layout) + ",");
-                lines.push("  },");
+                const lines = ["    {"];
+                // No date key at all when it's unknown — see the file header.
+                if (s.date) lines.push("        date: " + JSON.stringify(s.date) + ",");
+                lines.push("        kind: " + JSON.stringify(s.kind) + ",");
+                lines.push("        title: " + JSON.stringify(s.title) + ",");
+                if (s.link) lines.push("        link: " + JSON.stringify(s.link) + ",");
+                if (s.note) lines.push("        note: " + JSON.stringify(s.note) + ",");
+                lines.push("    },");
                 return lines.join("\n");
             });
             return FILE_HEADER + "\n\nconst SCRAPS = [\n" + blocks.join("\n") + "\n];\n";

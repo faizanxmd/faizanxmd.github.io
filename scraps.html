@@ -18,22 +18,35 @@
     <div class="container">
         <header class="scraps-header">
             <a class="back-link" href="index.html">← back</a>
-            <h1 class="page-title scraps-title">
-                <span class="scraps-title-main">Scraps</span>
-                <a class="scraps-title-xout" href="editor.html" aria-label="edit scraps">organized</a>
-            </h1>
+            <h1 class="page-title scraps-title">Scraps</h1>
+            <p class="scraps-datenote">dates are the month a thing landed here, not when I
+                found it. <span aria-hidden="true">--</span><span class="sr-only">a double
+                    dash</span> means the day wasn't recorded.</p>
         </header>
 
         <main>
-            <!-- The cards get built here by assets/scraps.js from the data
+            <!-- Filled in by assets/scraps.js. Starts hidden so a visitor
+                 without JS never sees controls that do nothing. -->
+            <div class="log-filter" id="scraps-filter" role="group" aria-label="filter the log by kind" hidden>
+            </div>
+            <p class="log-status" id="scraps-status" role="status"></p>
+
+            <!-- The log rows get built here by assets/scraps.js from the data
                  in assets/scraps-data.js. This starts empty on purpose. -->
-            <div class="scraps-desk" id="scraps-desk"></div>
+            <div class="scraps-log" id="scraps-log"></div>
+
+            <noscript>
+                <p class="log-empty">This log is built by a script. Enable JavaScript to read it.</p>
+            </noscript>
         </main>
 
         <footer>
             <div class="footer-content">
                 <a class="footer-email" id="footer-email" href="mailto:faizanxmd@gmail.com">faizanxmd@gmail.com</a>
-                <span class="built-in" id="built-in-text"><span class="footer-location">Built in Mathikere</span></span>
+                <!-- The > is the way into the local scraps editor. -->
+                <span class="built-in" id="built-in-text"><a class="footer-door" href="editor.html"
+                        aria-label="edit scraps">&gt;</a> <span
+                        class="footer-location footer-location--nodoor">Built in Mathikere</span></span>
             </div>
         </footer>
     </div>

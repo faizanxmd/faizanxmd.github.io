@@ -380,272 +380,257 @@ li {
     }
 }
 
-.scraps-page .container {
-    max-width: 920px;
-}
+
+/* ── SCRAPS: the log ──────────────────────────────────────────────────────
+   A dated ledger, not a pile of cards. Every visual difference between two
+   rows comes from their data — the date, the kind, whether there's a note.
+   Nothing here is set per-entry by hand. ──────────────────────────────── */
 
 .scraps-page header.scraps-header {
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-5);
 }
 
-.scraps-title {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--space-3) var(--space-4);
-}
-
-.scraps-title-main {
-    display: inline-block;
-    transform: rotate(-1.2deg);
-}
-
-.scraps-title-xout {
-    position: relative;
+/* The one honest line about what the day column means. */
+.scraps-datenote {
+    max-width: 42em;
+    margin-top: var(--space-3);
     color: var(--color-muted);
-    font-size: 0.85rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    text-transform: lowercase;
-    opacity: 0.7;
+    font-size: 0.82rem;
+    line-height: 1.55;
 }
 
-a.scraps-title-xout {
-    cursor: pointer;
+.scraps-datenote::before {
+    content: "> ";
+    color: var(--color-accent);
 }
 
-a.scraps-title-xout:hover,
-a.scraps-title-xout:focus-visible {
+/* The editor doorway: the > in this page's footer is a real link. */
+.footer-door {
+    color: var(--color-accent);
     text-decoration: none;
 }
 
-.scraps-title-xout::after {
-    content: "";
-    position: absolute;
-    left: -4%;
-    top: 52%;
-    width: 108%;
-    height: 2px;
-    background: var(--color-accent);
-    transform: rotate(-6deg);
-    opacity: 0.85;
+.footer-door:hover,
+.footer-door:focus-visible {
+    text-decoration: none;
+    opacity: 0.7;
 }
 
-.scraps-lede {
-    margin-top: var(--space-3);
-    max-width: 36em;
+/* ...which means this page's location text must not draw its own. */
+.footer-location--nodoor::before {
+    content: none;
+}
+
+/* ── the filter bar ── */
+
+.log-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-hairline);
+    font-size: 0.82rem;
+}
+
+.log-filter-label {
     color: var(--color-muted);
-    font-size: 0.95rem;
-    line-height: 1.55;
-    transform: rotate(0.4deg);
 }
 
-.scraps-desk {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-5) var(--space-4);
-    padding: var(--space-2) 0 var(--space-8);
-    align-items: start;
-}
-
-.scrap {
-    position: relative;
-    min-width: 0;
-    /* --nudge and --tilt are set per-card by assets/scraps.js. The fallbacks
-       (0) keep things sane if the script hasn't run. */
-    margin: var(--nudge, 0) 0 0;
-    padding: var(--space-4) var(--space-5);
-    background: var(--color-surface);
-    border: 1px solid var(--color-hairline);
-    border-radius: 2px;
-    box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.04);
-    transform: rotate(var(--tilt, 0deg));
-    transition: transform 0.18s ease, border-color 0.15s ease, box-shadow 0.18s ease;
-}
-
-/* A card that takes a whole row on its own — a visual breather. */
-.scrap--wide {
-    grid-column: 1 / -1;
-}
-
-.scrap--wide-center {
-    max-width: 72%;
-    justify-self: center;
-}
-
-.scrap--wide-right {
-    max-width: 85%;
-    justify-self: end;
-}
-
-.scrap:hover,
-.scrap:focus-within {
-    z-index: 2;
-    border-color: var(--color-accent);
-    box-shadow: 2px 6px 0 rgba(0, 0, 0, 0.06);
-    transform: rotate(0deg) translateY(-3px);
-}
-
-.scrap--tape::before {
-    content: "";
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    width: 42%;
-    height: 16px;
-    background: color-mix(in srgb, var(--color-accent) 22%, var(--color-surface-strong));
-    border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
-    transform: translateX(-50%) rotate(-2deg);
-    opacity: 0.9;
-    pointer-events: none;
-}
-
-.scrap--dashed {
-    border-style: dashed;
-    border-color: var(--color-muted);
-    background: transparent;
-}
-
-.scrap--quote {
-    background: var(--color-surface-strong);
-    border-left: 3px solid var(--color-accent);
-}
-
-.scrap--music {
-    border-style: dashed;
-}
-
-.scrap--thought {
-    border-style: dashed;
-    background:
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 27px,
-            color-mix(in srgb, var(--color-hairline) 80%, transparent) 28px
-        );
-    background-color: var(--color-surface);
-}
-
-.scrap--sm {
-    padding: var(--space-3) var(--space-4);
-    font-size: 0.95rem;
-}
-
-.scrap--tall {
-    padding-bottom: var(--space-8);
-}
-
-.scrap-tag {
-    display: inline-block;
-    margin-bottom: var(--space-2);
-    padding: 1px 7px;
-    border: 1px solid var(--color-hairline);
-    border-radius: 999px;
-    background: var(--color-bg);
-    color: var(--color-muted);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    line-height: 1.4;
-    text-transform: lowercase;
-    transform: rotate(-3deg);
-}
-
-.scrap-title {
-    display: block;
-    color: var(--color-text);
-    font-size: 1.05rem;
-    font-weight: 400;
-    line-height: 1.35;
-    word-break: break-word;
-}
-
-a.scrap-title {
+.log-filter-label::before {
+    content: "> ";
     color: var(--color-accent);
 }
 
-a.scrap-title:hover,
-a.scrap-title:focus-visible {
+.log-filter-btn {
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    background: none;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: inherit;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.log-filter-btn:hover,
+.log-filter-btn:focus-visible {
+    color: var(--color-text);
+}
+
+.log-filter-btn[aria-pressed="true"] {
+    border-bottom-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* The accent-underlined first letter is how the shortcut teaches itself. */
+.log-filter-key {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+}
+
+.log-filter-count {
+    color: var(--color-muted);
+    opacity: 0.7;
+}
+
+.log-status {
+    min-height: 1.4em;
+    margin-bottom: var(--space-4);
+    color: var(--color-muted);
+    font-size: 0.82rem;
+}
+
+.log-status:not(:empty)::before {
+    content: "> ";
+    color: var(--color-accent);
+}
+
+/* ── months ── */
+
+.log-month + .log-month {
+    margin-top: var(--space-8);
+}
+
+/* Inherits the sitewide h2: 0.82rem / 700 / 0.08em / uppercase / muted. */
+.log-month-head {
+    margin-bottom: 0;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-hairline);
+}
+
+.log-rows {
+    list-style: none;
+}
+
+/* ── rows ── */
+
+/* Four columns: the hover prompt, the day, the kind, then everything else.
+   ch units are exact in a monospace face, so the columns are truly flush. */
+.log-row {
+    display: grid;
+    grid-template-columns: 1.5ch 2ch 7ch minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: var(--space-3);
+    padding: var(--space-3) 0;
+}
+
+/* The first row of a month has no preceding sibling, so this never doubles
+   up with the month heading's bottom border. */
+.log-row + .log-row {
+    border-top: 1px solid var(--color-hairline);
+}
+
+/* The footer's shell prompt, moved into the log. The gutter is always 1.5ch
+   wide, so swapping the content in on hover shifts nothing. */
+.log-row::before {
+    content: "";
+    grid-column: 1;
+    color: var(--color-accent);
+}
+
+@media (hover: hover) {
+    .log-row:hover::before {
+        content: ">";
+    }
+}
+
+/* Keyboard tabbing gets the same affordance as the mouse. */
+.log-row:focus-within::before {
+    content: ">";
+}
+
+.log-day {
+    grid-column: 2;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+.log-kind {
+    grid-column: 3;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+}
+
+.log-title {
+    grid-column: 4;
+    color: var(--color-text);
+    font-size: 1rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    transition: color 0.15s ease;
+}
+
+a.log-title {
+    color: var(--color-accent);
+}
+
+a.log-title:hover,
+a.log-title:focus-visible {
     text-decoration: underline;
 }
 
-.scrap--quote .scrap-title {
-    font-size: 1.15rem;
-    font-style: italic;
-}
-
-.scrap-note {
-    margin-top: var(--space-2);
+.log-note {
+    grid-column: 4;
+    margin-top: var(--space-1);
     color: var(--color-muted);
     font-size: 0.85rem;
-    font-style: italic;
     line-height: 1.5;
 }
 
-.scrap-ghost-link {
-    display: inline-block;
-    margin-top: var(--space-3);
+.log-empty {
+    padding: var(--space-6) 0;
     color: var(--color-muted);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 
-.scrap-ghost-link:hover,
-.scrap-ghost-link:focus-visible {
-    color: var(--color-accent);
-}
+/* No dark-mode block below: the log has no shadows, surfaces or tints, so
+   the design tokens already handle both schemes on their own. */
 
-html.dark-mode .scrap {
-    box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.25);
-}
-
-html.dark-mode .scrap:hover,
-html.dark-mode .scrap:focus-within {
-    box-shadow: 2px 6px 0 rgba(0, 0, 0, 0.35);
-}
-
-html.dark-mode .scrap--tape::before {
-    background: color-mix(in srgb, var(--color-accent) 28%, var(--color-surface-strong));
-    border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
-}
-
-@media (max-width: 680px) {
-    .scraps-page .container {
-        max-width: var(--container);
+@media (max-width: 480px) {
+    /* Day keeps its own gutter; kind stacks above the title. */
+    .log-row {
+        grid-template-columns: 2.5ch minmax(0, 1fr);
     }
 
-    .scraps-desk {
-        grid-template-columns: 1fr;
-        gap: var(--space-4);
+    .log-row::before {
+        display: none;
     }
 
-    /* One column on mobile: full width, no vertical nudge, and only a soft
-       tilt (40% of the desktop value) so the stack stays readable. */
-    .scrap {
-        max-width: none;
-        margin-top: 0;
-        justify-self: stretch;
-        transform: rotate(calc(var(--tilt, 0deg) * 0.4));
+    .log-day {
+        grid-column: 1;
     }
 
-    .scrap--wide {
-        grid-column: auto;
+    .log-kind {
+        grid-column: 2;
+        font-size: 0.75rem;
     }
 
-    .scrap:hover,
-    .scrap:focus-within {
-        transform: rotate(0deg) translateY(-2px);
+    .log-title,
+    .log-note {
+        grid-column: 2;
     }
 }
 
+/* On touch the underlined shortcut letter promises a key that isn't there. */
+@media (hover: none) {
+    .log-filter-key {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+/* The only motion left on this page is two colour fades. */
 @media (prefers-reduced-motion: reduce) {
-    .scrap {
-        transition: none;
-    }
 
-    .scrap:hover,
-    .scrap:focus-within {
-        transform: none;
-        box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.04);
+    .log-title,
+    .log-filter-btn {
+        transition: none;
     }
 }
