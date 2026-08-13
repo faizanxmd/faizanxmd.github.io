@@ -5,8 +5,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 Faizan's personal site. **Deliberately tiny**: plain HTML and one CSS file, no JavaScript,
-no build step, no dependencies. Deployed on Vercel as static files — what's on disk is
-what ships.
+no build step, no dependencies. Deployed on GitHub Pages at
+https://faizanxmd.github.io/ (repo `faizanxmd/faizanxmd.github.io`, `main`
+branch, root) — every push publishes automatically; what's on disk is what ships.
 
 The owner is a novice programmer. Every change must keep the code simple enough
 for them to read and edit unassisted. Small amounts of JavaScript are acceptable
