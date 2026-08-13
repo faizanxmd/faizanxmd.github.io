@@ -5,80 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faizan</title>
-    <meta name="description" content="Faizan's corner of the internet. Writing, scraps. Built in Mathikere.">
+
     <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
-    <script src="assets/theme.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="home">
-    <div class="container">
-        <header>
-            <h1 class="site-name" id="site-name"><span class="cursor">█</span></h1>
-        </header>
+<body>
+    <h1>Faizan</h1>
 
-        <main class="home-main">
-            <nav class="home-nav" aria-label="Main">
-                <section class="index-section">
-                    <h2><a href="writing.html">Writing</a></h2>
-                </section>
+    <p class="tagline">
+        Student at MSRIT ·
+        <a href="https://github.com/FaizanXMD">GitHub</a> ·
+        <a href="https://medium.com/@FaizanXMD">Medium</a> ·
+        <a href="https://x.com/FaizanXMD07">X</a> ·
+        <a href="mailto:faizanxmd@gmail.com">Say hi</a>
+    </p>
 
-                <section class="index-section">
-                    <h2><a href="scraps.html">Scraps</a></h2>
-                </section>
 
-                <section class="index-section">
-                    <h2><a href="workbench.html">Workbench</a></h2>
-                </section>
+    <h2>Writing</h2>
+    <!-- To add a piece: copy a line below, change the date, link, and title. -->
+    <ul>
+        <li><a href="articles/us-election.html">US Election 2024</a></li>
+    </ul>
 
-                <section class="index-section">
-                    <h2><a href="about.html">About</a></h2>
-                </section>
-            </nav>
-        </main>
 
-        <footer>
-            <div class="footer-content">
-                <a class="footer-email" id="footer-email" href="mailto:faizanxmd@gmail.com">faizanxmd@gmail.com</a>
-                <span class="built-in" id="built-in-text"><span class="footer-location">Built in Mathikere</span></span>
-            </div>
-        </footer>
-    </div>
+    <h2>Good links</h2>
 
-    <script>
-        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    <ul>
+        <li><a href="https://grahamduncan.blog/whats-going-on-here/">What's Going On Here?</a> — graham duncan</li>
+        <li><a href="https://github.com/robinpnalex">Lil Mo</a></li>
+        <li><a href="https://beej.us/guide/bgc/">Beej's Guide to C</a></li>
+    </ul>
 
-        async function typeWriter(element, text) {
-            const cursor = '<span class="cursor">█</span>';
-
-            for (let i = 0; i <= text.length; i++) {
-                element.innerHTML = text.substring(0, i) + cursor;
-                await sleep(100);
-            }
-        }
-
-        async function animateHeader() {
-            const h1 = document.getElementById('site-name');
-            const cursor = '<span class="cursor">█</span>';
-
-            await typeWriter(h1, "Faizn");
-            await sleep(800);
-            h1.innerHTML = "Faiz" + cursor;
-            await sleep(100);
-            h1.innerHTML = "Faiza" + cursor;
-            await sleep(100);
-            h1.innerHTML = "Faizan" + cursor;
-            await sleep(300);
-            h1.innerHTML = "Faizan." + cursor;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(animateHeader, 300);
-        });
-    </script>
 </body>
 
 </html>

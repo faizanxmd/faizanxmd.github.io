@@ -1,0 +1,58 @@
+/* One stylesheet for the whole site. One theme.
+   The colors are Solarized-inspired: a warm paper background instead of
+   white, dark warm gray instead of black. Full contrast (black on white)
+   is harsh on the eyes; these sit a step softer in both directions. */
+
+body {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #3d3a33;
+    /* warm dark gray, not black */
+    background: #fdf6e3;
+    /* Solarized "base3" paper */
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.4rem;
+    margin: 2.5rem 0 0.5rem;
+}
+
+/* The one-line intro under the name. */
+.tagline {
+    text-align: center;
+    color: #6e6a5d;
+    margin-bottom: 3rem;
+}
+
+h2 {
+    font-size: 1.15rem;
+    margin-top: 2.5rem;
+}
+
+a {
+    color: #17638f;
+    /* Solarized blue, darkened to stay readable on paper */
+}
+
+img {
+    max-width: 100%;
+}
+
+blockquote {
+    margin: 1rem 0;
+    padding-left: 1rem;
+    border-left: 3px solid #d9cfb4;
+    color: #5f5b4e;
+    font-style: italic;
+}
+
+footer {
+    margin-top: 4rem;
+    font-size: 0.9rem;
+    color: #6e6a5d;
+}
