@@ -43,3 +43,20 @@ blockquote {
     color: #5f5b4e;
     font-style: italic;
 }
+
+figure {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+figure img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #d9cfb4;
+}
+
+figcaption {
+    font-size: 0.9rem;
+    color: #6e6a5d;
+    margin-top: 0.5rem;
+}
