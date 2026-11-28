@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orthomosaic Image Generation - Faizan</title>
+    <meta name="description" content="How an orthomosaic differs from a regular panorama, and how the photogrammetry pipeline turns drone photos into a georeferenced 2D map and 3D depth model.">
+    <link rel="icon" type="image/jpeg" href="../assets/favicon.jpg">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <p><a href="../index.html">← back</a></p>
+
+    <h1>Orthomosaic Image Generation</h1>
+    <p><em>Nov 29, 2026</em></p>
+
+    <p>
+        I had gotten a selection assignment from my college drone club to basically turn the dataset
+        of images of a particular ground, taken by their drone, into an orthomosaic image.
+    </p>
+    <p>
+        So first, I had to understand how an orthomosaic differs from a normal panoramic image which
+        is taken by a camera. I asked Neon to make me some visualizations:
+    </p>
+
+    <figure>
+        <img src="../assets/orthomosaic/01-panorama-vs-orthomosaic.png" alt="Comparison between a regular camera panorama and a true orthomosaic.">
+    </figure>
+
+    <p>
+        Here, we can see that in a regular photo, tall objects shift outward and the sizes of the
+        objects which are closer are larger. Due to this stretching, we cannot get accurate
+        measurements to use for analysis and processing for the drones. Also, we lose details like
+        the cars on the road.
+    </p>
+    <p>
+        This way, we get a true flat 2D representation of the image.
+    </p>
+    <p>
+        So the next question I got was: don't we lose depth when we convert this into a flat 2D
+        image? It turns out we actually don't — in fact, we create a more accurate 3D depth model of
+        the entire image and combine it with the orthomosaic view.
+    </p>
+    <p>
+        Here is how the whole process of making this starts (the pipeline):
+    </p>
+
+    <h2>1. Feature Mapping</h2>
+    <p>
+        So here, we basically look at our dataset, fix some points across all images, and call them
+        key points.
+    </p>
+
+    <figure>
+        <img src="../assets/orthomosaic/02-feature-keypoints.png" alt="Detected SIFT keypoints across two consecutive aerial photos." loading="lazy">
+    </figure>
+
+    <p>
+        Now we match all these points.
+    </p>
+
+    <figure>
+        <img src="../assets/orthomosaic/03-feature-matches-raw.png" alt="Raw feature matches showing true green matches and false red matches." loading="lazy">
+    </figure>
+
+    <p>
+        Here we can see some red lines, which means features are not mapped properly, so we run them
+        through a filter to clean these errors.
+    </p>
+
+    <figure>
+        <img src="../assets/orthomosaic/04-feature-matches-ransac.png" alt="RANSAC-filtered feature matches keeping only geometrically consistent pairs." loading="lazy">
+    </figure>
+
+    <h2>2. Structure from Motion (SfM) &amp; Parallax Triangulation</h2>
+    <p>
+        Some basic stuff I had to understand first:
+    </p>
+    <p>
+        The principle of parallax. When we switch eyes and look at a closer object, it appears to
+        shift a lot, but when we look at a faraway object, it shifts way less. So using this
+        principle, we can predict if a pixel is closer or farther.
+    </p>
+    <p>
+        Now this is simple: tall objects are closer, so they shift faster than the small objects
+        which are further away, so they move slower. I have attached a snapshot at a point and its
+        motion speed in the camera feed. This helps us find the depth of the pixels in the image.
+    </p>
+
+    <figure>
+        <img src="../assets/orthomosaic/05-sfm-parallax-triangulation.png" alt="Structure from Motion and parallax triangulation showing tall trees shifting faster than flat ground." loading="lazy">
+    </figure>
+
+    <h2>3. Dense Multi-View Stereo (MVS) &amp; Digital Surface Model (DSM)</h2>
+    <p>
+        Basically, now we use the key points and their depth we got from step 2 to build a sparse
+        model.
+    </p>
+    <ul>
+        <li>First, we start by plotting some sparse key points with their depth estimation.</li>
+    </ul>
+
+    <figure>
+        <img src="../assets/orthomosaic/06-sparse-sfm-cloud.png" alt="Sparse SfM 3D point cloud showing initial elevation points." loading="lazy">
+    </figure>
+
+    <ul>
+        <li>Then we make this more dense by adding more points. It is called a Dense MVS cloud.</li>
+    </ul>
+
+    <figure>
+        <img src="../assets/orthomosaic/07-dense-mvs-cloud.png" alt="Dense MVS point cloud with dense 3D height points." loading="lazy">
+    </figure>
+
+    <ul>
+        <li>Now we apply a 3D textured mesh on this Dense MVS cloud to create a DSM elevation map by making a textured surface.</li>
+    </ul>
+
+    <figure>
+        <img src="../assets/orthomosaic/08-dsm-elevation-mesh.png" alt="Digital Surface Model elevation map and 3D textured mesh." loading="lazy">
+    </figure>
+
+    <h2>4. Georeferencing</h2>
+    <p>
+        This step means mapping the points in our photo to actual coordinates. This helps us scale
+        the image properly and also find actual distances between points/pixels.
+    </p>
+
+    <figure>
+        <img src="../assets/orthomosaic/09-georef-unscaled.png" alt="Unscaled local reconstruction before aligning to Ground Control Points." loading="lazy">
+    </figure>
+
+    <figure>
+        <img src="../assets/orthomosaic/10-georef-snapped-gcps.png" alt="Reconstruction aligned and snapped to four Ground Control Points." loading="lazy">
+    </figure>
+
+    <h2>5. Final Output</h2>
+    <p>
+        We get this orthomosaic view with the depth of each pixel and its actual coordinate. Here
+        are a few snapshots.
+    </p>
+
+    <figure>
+        <img src="../assets/orthomosaic/11-final-output-road.png" alt="Final orthomosaic inspection showing UTM coordinates and elevation on the asphalt road." loading="lazy">
+    </figure>
+
+    <figure>
+        <img src="../assets/orthomosaic/12-final-output-stands.png" alt="Final orthomosaic inspection showing UTM coordinates and elevation on the concrete stands." loading="lazy">
+    </figure>
+
+    <h2>Running the Pipeline</h2>
+    <p>
+        Now, the whole process I explained above is usually done with ODM via OrbStack (like Docker)
+        and Python scripts.
+    </p>
+    <p>
+        I did not focus a lot on the pipeline and just used the standard one which Neon recommended
+        for my machine. Neon used this pipeline to run all the scripts inside an OrbStack container
+        and then gave me the outputs.
+    </p>
+    <p>
+        I chose this setup because it produces all the stuff we need — like the orthomosaic, DSM
+        cloud, etc. — in one seamless run using a standard procedure and scripts. I did do the run
+        with a RAM limit due to the constraints of my machine.
+    </p>
+
+    <blockquote>
+        I used Gemini Neon on Medium effort in T3 Code to generate interactive visualizations to
+        help me understand these concepts, and to fix typos and punctuation in this piece.
+    </blockquote>
+
+</body>
+
+</html>
